@@ -73,7 +73,8 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
     futureResponse = get(Uri.parse(widget.message.message));
     futureResponse.then((response) {
       Uint8List bytes = response.bodyBytes;
-      File file = File('$tempDir/${DateTime.now()}.m4a');
+      File file = File(
+          '$tempDir/${extractFileNameFromUrl(widget.message.message)}.m4a');
 
       if (response.statusCode == 200) {
         file.writeAsBytes(bytes).then((_) {
@@ -100,6 +101,12 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
     controller.dispose();
     _playerState.dispose();
     super.dispose();
+  }
+
+  String extractFileNameFromUrl(String url) {
+    List<String> urlParts = url.split('/');
+    String fileName = urlParts.last.split('?').first;
+    return fileName;
   }
 
   @override
