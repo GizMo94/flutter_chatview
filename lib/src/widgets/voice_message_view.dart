@@ -7,6 +7,7 @@ import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
 
 class VoiceMessageView extends StatefulWidget {
   const VoiceMessageView({
@@ -50,8 +51,8 @@ class VoiceMessageView extends StatefulWidget {
 class _VoiceMessageViewState extends State<VoiceMessageView> {
   late PlayerController controller;
   late StreamSubscription<PlayerState> playerStateSubscription;
-  late Directory appDirectory;
   late Future<Response> futureResponse;
+  late String tempDir;
 
   final ValueNotifier<PlayerState> _playerState =
       ValueNotifier(PlayerState.stopped);
@@ -63,12 +64,16 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   @override
   void initState() {
     super.initState();
-    appDirectory = Directory.systemTemp;
+
+    getApplicationDocumentsDirectory().then((value) {
+      tempDir = value.path;
+    });
+
     controller = PlayerController();
     futureResponse = get(Uri.parse(widget.message.message));
     futureResponse.then((response) {
       Uint8List bytes = response.bodyBytes;
-      File file = File('${appDirectory.path}/${widget.message.message}');
+      File file = File('$tempDir/audio.m4a');
 
       if (response.statusCode == 200) {
         file.writeAsBytes(bytes).then((_) {
