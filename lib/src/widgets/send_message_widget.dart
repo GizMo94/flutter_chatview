@@ -203,6 +203,8 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                         _voiceReplyMessageView
                                       else if (state.messageType.isImage)
                                         _imageReplyMessageView
+                                      else if (state.messageType.isVideo)
+                                        _videoReplyMessageView
                                       else
                                         Text(
                                           state.message,
@@ -232,6 +234,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                           sendMessageConfig: widget.sendMessageConfig,
                           onRecordingComplete: _onRecordingComplete,
                           onImageSelected: _onImageSelected,
+                          onVideoSelected: _onVideoSelected,
                         )
                       ],
                     ),
@@ -282,6 +285,25 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     );
   }
 
+  Widget get _videoReplyMessageView {
+    return Row(
+      children: [
+        Icon(
+          Icons.video_library,
+          size: 20,
+          color: widget.sendMessageConfig?.replyMessageColor ??
+              Colors.grey.shade700,
+        ),
+        Text(
+          PackageStrings.video,
+          style: TextStyle(
+            color: widget.sendMessageConfig?.replyMessageColor ?? Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
+
   void _onRecordingComplete(String? path) {
     if (path != null) {
       widget.onSendTap.call(path, replyMessage, MessageType.voice);
@@ -293,6 +315,14 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     debugPrint('Call in Send Message Widget');
     if (imagePath.isNotEmpty) {
       widget.onSendTap.call(imagePath, replyMessage, MessageType.image);
+      _assignRepliedMessage();
+    }
+  }
+
+  void _onVideoSelected(String imagePath, String error) {
+    debugPrint('Call in Send Message Widget');
+    if (imagePath.isNotEmpty) {
+      widget.onSendTap.call(imagePath, replyMessage, MessageType.video);
       _assignRepliedMessage();
     }
   }

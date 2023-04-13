@@ -20,11 +20,11 @@
  * SOFTWARE.
  */
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:flutter/material.dart';
-
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/utils/package_strings.dart';
+import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 import '../utils/constants/constants.dart';
 import 'chat_view_inherited_widget.dart';
@@ -113,53 +113,61 @@ class ReplyMessageWidget extends StatelessWidget {
                                         BorderRadius.circular(14),
                               ),
                             )
-                          : Container(
-                              constraints: BoxConstraints(
-                                maxWidth: repliedMessageConfig?.maxWidth ?? 280,
-                              ),
-                              padding: repliedMessageConfig?.padding ??
-                                  const EdgeInsets.symmetric(
-                                    vertical: 8,
-                                    horizontal: 12,
+                          : message.replyMessage.messageType.isVideo
+                              ? VideoSnapshot(
+                                  repliedMessageConfig: repliedMessageConfig,
+                                  replyMessage: replyMessage)
+                              : Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth:
+                                        repliedMessageConfig?.maxWidth ?? 280,
                                   ),
-                              decoration: BoxDecoration(
-                                borderRadius: _borderRadius(
-                                  replyMessage: replyMessage,
-                                  replyBySender: replyBySender,
-                                ),
-                                color: repliedMessageConfig?.backgroundColor ??
-                                    Colors.grey.shade500,
-                              ),
-                              child: message.replyMessage.messageType.isVoice
-                                  ? Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.mic,
-                                          color: repliedMessageConfig
-                                                  ?.micIconColor ??
-                                              Colors.white,
-                                        ),
-                                        const SizedBox(width: 2),
-                                        if (message.replyMessage
-                                                .voiceMessageDuration !=
-                                            null)
-                                          Text(
-                                            message.replyMessage
-                                                .voiceMessageDuration!
-                                                .toHHMMSS(),
-                                            style:
-                                                repliedMessageConfig?.textStyle,
-                                          ),
-                                      ],
-                                    )
-                                  : Text(
-                                      replyMessage,
-                                      style: repliedMessageConfig?.textStyle ??
-                                          textTheme.bodyMedium!
-                                              .copyWith(color: Colors.black),
+                                  padding: repliedMessageConfig?.padding ??
+                                      const EdgeInsets.symmetric(
+                                        vertical: 8,
+                                        horizontal: 12,
+                                      ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: _borderRadius(
+                                      replyMessage: replyMessage,
+                                      replyBySender: replyBySender,
                                     ),
-                            ),
+                                    color:
+                                        repliedMessageConfig?.backgroundColor ??
+                                            Colors.grey.shade500,
+                                  ),
+                                  child: message
+                                          .replyMessage.messageType.isVoice
+                                      ? Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.mic,
+                                              color: repliedMessageConfig
+                                                      ?.micIconColor ??
+                                                  Colors.white,
+                                            ),
+                                            const SizedBox(width: 2),
+                                            if (message.replyMessage
+                                                    .voiceMessageDuration !=
+                                                null)
+                                              Text(
+                                                message.replyMessage
+                                                    .voiceMessageDuration!
+                                                    .toHHMMSS(),
+                                                style: repliedMessageConfig
+                                                    ?.textStyle,
+                                              ),
+                                          ],
+                                        )
+                                      : Text(
+                                          replyMessage,
+                                          style: repliedMessageConfig
+                                                  ?.textStyle ??
+                                              textTheme.bodyMedium!.copyWith(
+                                                  color: Colors.black),
+                                        ),
+                                ),
                     ),
                   ),
                   if (replyBySender)
@@ -190,4 +198,52 @@ class ReplyMessageWidget extends StatelessWidget {
               (replyMessage.length < 29
                   ? BorderRadius.circular(replyBorderRadius1)
                   : BorderRadius.circular(replyBorderRadius2));
+}
+
+class VideoSnapshot extends StatefulWidget {
+  const VideoSnapshot({
+    Key? key,
+    required this.repliedMessageConfig,
+    required this.replyMessage,
+  }) : super(key: key);
+
+  final RepliedMessageConfiguration? repliedMessageConfig;
+  final String replyMessage;
+
+  @override
+  State<VideoSnapshot> createState() => _VideoSnapshotState();
+}
+
+class _VideoSnapshotState extends State<VideoSnapshot> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = VideoPlayerController.network(widget.replyMessage)
+      ..initialize().then((_) {
+        // Seek to the first frame
+        _controller.seekTo(Duration.zero);
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: widget.repliedMessageConfig?.repliedImageMessageHeight ?? 100,
+      width: widget.repliedMessageConfig?.repliedImageMessageWidth ?? 80,
+      decoration: BoxDecoration(
+        borderRadius: widget.repliedMessageConfig?.borderRadius ??
+            BorderRadius.circular(14),
+      ),
+      child: VideoPlayer(_controller),
+    );
+  }
 }

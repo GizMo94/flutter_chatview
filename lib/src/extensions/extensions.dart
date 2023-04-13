@@ -23,6 +23,7 @@ import 'package:chatview/chatview.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../utils/constants/constants.dart';
 import '../utils/emoji_parser.dart';
 import '../utils/package_strings.dart';
@@ -93,6 +94,8 @@ extension MessageTypes on MessageType {
   bool get isText => this == MessageType.text;
 
   bool get isVoice => this == MessageType.voice;
+
+  bool get isVideo => this == MessageType.video;
 
   bool get isCustom => this == MessageType.custom;
 }

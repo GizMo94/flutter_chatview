@@ -41,6 +41,7 @@ class ChatUITextField extends StatefulWidget {
     required this.onPressed,
     required this.onRecordingComplete,
     required this.onImageSelected,
+    required this.onVideoSelected,
   }) : super(key: key);
 
   /// Provides configuration of default text field in chat.
@@ -60,6 +61,9 @@ class ChatUITextField extends StatefulWidget {
 
   /// Provides callback when user select images from camera/gallery.
   final StringsCallBack onImageSelected;
+
+  /// Provides callback when user select videos from camera/gallery.
+  final StringsCallBack onVideoSelected;
 
   @override
   State<ChatUITextField> createState() => _ChatUITextFieldState();
@@ -81,6 +85,9 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
 
   ImagePickerIconsConfiguration? get imagePickerIconsConfig =>
       sendMessageConfig?.imagePickerIconsConfig;
+
+  VideoPickerIconsConfiguration? get videoPickerIconsConfig =>
+      sendMessageConfig?.videoPickerIconsConfig;
 
   TextFieldConfiguration? get textFieldConfig =>
       sendMessageConfig?.textFieldConfig;
@@ -221,7 +228,8 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                         if (!isRecordingValue) ...[
                           IconButton(
                             constraints: const BoxConstraints(),
-                            onPressed: () => _onIconPressed(ImageSource.camera),
+                            onPressed: () =>
+                                _onImageIconPressed(ImageSource.camera),
                             icon:
                                 imagePickerIconsConfig?.cameraImagePickerIcon ??
                                     Icon(
@@ -233,13 +241,37 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                           IconButton(
                             constraints: const BoxConstraints(),
                             onPressed: () =>
-                                _onIconPressed(ImageSource.gallery),
+                                _onVideoIconPressed(ImageSource.camera),
+                            icon:
+                                videoPickerIconsConfig?.cameraVideoPickerIcon ??
+                                    Icon(
+                                      Icons.videocam_outlined,
+                                      color: videoPickerIconsConfig
+                                          ?.cameraIconColor,
+                                    ),
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(),
+                            onPressed: () =>
+                                _onImageIconPressed(ImageSource.gallery),
                             icon: imagePickerIconsConfig
                                     ?.galleryImagePickerIcon ??
                                 Icon(
                                   Icons.image,
                                   color:
                                       imagePickerIconsConfig?.galleryIconColor,
+                                ),
+                          ),
+                          IconButton(
+                            constraints: const BoxConstraints(),
+                            onPressed: () =>
+                                _onVideoIconPressed(ImageSource.gallery),
+                            icon: videoPickerIconsConfig
+                                    ?.galleryVideoPickerIcon ??
+                                Icon(
+                                  Icons.video_collection,
+                                  color:
+                                      videoPickerIconsConfig?.galleryIconColor,
                                 ),
                           ),
                         ],
@@ -284,12 +316,21 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
     }
   }
 
-  void _onIconPressed(ImageSource imageSource) async {
+  void _onImageIconPressed(ImageSource imageSource) async {
     try {
       final XFile? image = await _imagePicker.pickImage(source: imageSource);
       widget.onImageSelected(image?.path ?? '', '');
     } catch (e) {
       widget.onImageSelected('', e.toString());
+    }
+  }
+
+  void _onVideoIconPressed(ImageSource imageSource) async {
+    try {
+      final XFile? image = await _imagePicker.pickVideo(source: imageSource);
+      widget.onVideoSelected(image?.path ?? '', '');
+    } catch (e) {
+      widget.onVideoSelected('', e.toString());
     }
   }
 

@@ -49,6 +49,9 @@ class SendMessageConfiguration {
   /// Provides configuration of image picker functionality.
   final ImagePickerIconsConfiguration? imagePickerIconsConfig;
 
+  /// Provides configuration of image picker functionality.
+  final VideoPickerIconsConfiguration? videoPickerIconsConfig;
+
   /// Provides configuration of text field.
   final TextFieldConfiguration? textFieldConfig;
 
@@ -65,6 +68,7 @@ class SendMessageConfiguration {
     this.textFieldConfig,
     this.textFieldBackgroundColor,
     this.imagePickerIconsConfig,
+    this.videoPickerIconsConfig,
     this.defaultSendButtonColor,
     this.sendButtonIcon,
     this.replyDialogColor,
@@ -95,6 +99,27 @@ class ImagePickerIconsConfiguration {
     this.galleryIconColor,
     this.galleryImagePickerIcon,
     this.cameraImagePickerIcon,
+  });
+}
+
+class VideoPickerIconsConfiguration {
+  /// Provides ability to pass custom gallery video picker icon.
+  final Widget? galleryVideoPickerIcon;
+
+  /// Provides ability to pass custom camera video picker icon.
+  final Widget? cameraVideoPickerIcon;
+
+  /// Used to give color to camera icon.
+  final Color? cameraIconColor;
+
+  /// Used to give color to gallery icon.
+  final Color? galleryIconColor;
+
+  const VideoPickerIconsConfiguration({
+    this.cameraIconColor,
+    this.galleryIconColor,
+    this.galleryVideoPickerIcon,
+    this.cameraVideoPickerIcon,
   });
 }
 
