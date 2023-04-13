@@ -106,7 +106,9 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   String extractFileNameFromUrl(String url) {
     List<String> urlParts = url.split('/');
     String fileName = urlParts.last.split('?').first;
-    return fileName;
+    String fileID = fileName.split('-').last.split('.').first;
+    String fileExtension = fileName.split('-').last.split('.').last;
+    return fileID + fileExtension;
   }
 
   @override
