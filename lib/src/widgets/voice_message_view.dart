@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/chatview.dart';
-import 'package:chatview/src/models/voice_message_configuration.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class VoiceMessageView extends StatefulWidget {
   const VoiceMessageView({
@@ -49,6 +50,8 @@ class VoiceMessageView extends StatefulWidget {
 class _VoiceMessageViewState extends State<VoiceMessageView> {
   late PlayerController controller;
   late StreamSubscription<PlayerState> playerStateSubscription;
+  late Directory appDirectory;
+  late Future<Response> futureResponse;
 
   final ValueNotifier<PlayerState> _playerState =
       ValueNotifier(PlayerState.stopped);
@@ -60,15 +63,27 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   @override
   void initState() {
     super.initState();
-    controller = PlayerController()
-      ..preparePlayer(
-        path: widget.message.message,
-        noOfSamples: widget.config?.playerWaveStyle
-                ?.getSamplesForWidth(widget.screenWidth * 0.5) ??
-            playerWaveStyle.getSamplesForWidth(widget.screenWidth * 0.5),
-      ).whenComplete(() => widget.onMaxDuration?.call(controller.maxDuration));
-    playerStateSubscription = controller.onPlayerStateChanged
-        .listen((state) => _playerState.value = state);
+    appDirectory = Directory.systemTemp;
+    futureResponse = get(Uri.parse(widget.message.message));
+    futureResponse.then((response) {
+      Uint8List bytes = response.bodyBytes;
+      File file = File('${appDirectory.path}/${widget.message.message}');
+
+      if (response.statusCode == 200) {
+        file.writeAsBytes(bytes).then((_) {
+          controller = PlayerController()
+            ..preparePlayer(
+              path: file.path,
+              noOfSamples: widget.config?.playerWaveStyle
+                      ?.getSamplesForWidth(widget.screenWidth * 0.5) ??
+                  playerWaveStyle.getSamplesForWidth(widget.screenWidth * 0.5),
+            ).whenComplete(
+                () => widget.onMaxDuration?.call(controller.maxDuration));
+        });
+      }
+      playerStateSubscription = controller.onPlayerStateChanged
+          .listen((state) => _playerState.value = state);
+    });
   }
 
   @override
