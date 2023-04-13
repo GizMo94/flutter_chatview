@@ -8,33 +8,33 @@ class ReceiptsCustomMessages implements LookupMessages {
   @override
   String prefixAgo() => '';
   @override
-  String prefixFromNow() => '';
+  String prefixFromNow() => 'd\'ici ';
   @override
-  String suffixAgo() => '';
+  String suffixAgo() => 'depuis';
   @override
   String suffixFromNow() => '';
   @override
-  String lessThanOneMinute(int seconds) => 'now';
+  String lessThanOneMinute(int seconds) => 'maintenant';
   @override
-  String aboutAMinute(int minutes) => '$minutes m ago';
+  String aboutAMinute(int minutes) => 'environ une minute';
   @override
-  String minutes(int minutes) => '$minutes m ago';
+  String minutes(int minutes) => '$minutes minute${minutes > 1 ? 's' : ''}';
   @override
-  String aboutAnHour(int minutes) => '$minutes m ago';
+  String aboutAnHour(int minutes) => 'environ une heure';
   @override
-  String hours(int hours) => '$hours h ago';
+  String hours(int hours) => '$hours heure${hours > 1 ? 's' : ''}';
   @override
-  String aDay(int hours) => '$hours h ago';
+  String aDay(int hours) => 'environ un jour';
   @override
-  String days(int days) => '$days d ago';
+  String days(int days) => '$days jour${days > 1 ? 's' : ''}';
   @override
-  String aboutAMonth(int days) => '$days d ago';
+  String aboutAMonth(int days) => 'environ un mois';
   @override
-  String months(int months) => '$months mo ago';
+  String months(int months) => '$months mois';
   @override
-  String aboutAYear(int year) => '$year y ago';
+  String aboutAYear(int year) => 'environ un an';
   @override
-  String years(int years) => '$years y ago';
+  String years(int years) => '$years an${years > 1 ? 's' : ''}';
   @override
   String wordSeparator() => ' ';
 }
