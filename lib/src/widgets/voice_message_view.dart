@@ -64,6 +64,7 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   void initState() {
     super.initState();
     appDirectory = Directory.systemTemp;
+    controller = PlayerController();
     futureResponse = get(Uri.parse(widget.message.message));
     futureResponse.then((response) {
       Uint8List bytes = response.bodyBytes;
@@ -71,14 +72,16 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
 
       if (response.statusCode == 200) {
         file.writeAsBytes(bytes).then((_) {
-          controller = PlayerController()
-            ..preparePlayer(
-              path: file.path,
-              noOfSamples: widget.config?.playerWaveStyle
-                      ?.getSamplesForWidth(widget.screenWidth * 0.5) ??
-                  playerWaveStyle.getSamplesForWidth(widget.screenWidth * 0.5),
-            ).whenComplete(
-                () => widget.onMaxDuration?.call(controller.maxDuration));
+          controller
+              .preparePlayer(
+                path: file.path,
+                noOfSamples: widget.config?.playerWaveStyle
+                        ?.getSamplesForWidth(widget.screenWidth * 0.5) ??
+                    playerWaveStyle
+                        .getSamplesForWidth(widget.screenWidth * 0.5),
+              )
+              .whenComplete(
+                  () => widget.onMaxDuration?.call(controller.maxDuration));
         });
       }
       playerStateSubscription = controller.onPlayerStateChanged
