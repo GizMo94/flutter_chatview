@@ -73,8 +73,8 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
     futureResponse = get(Uri.parse(widget.message.message));
     futureResponse.then((response) {
       Uint8List bytes = response.bodyBytes;
-      File file = File(
-          '$tempDir/${extractFileNameFromUrl(widget.message.message)}.m4a');
+      File file =
+          File('$tempDir/${extractFileNameFromUrl(widget.message.message)}');
 
       if (response.statusCode == 200) {
         file.writeAsBytes(bytes).then((_) {
