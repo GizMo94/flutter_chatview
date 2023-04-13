@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/chatview.dart';
-import 'package:chatview/src/models/voice_message_configuration.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
 
 class VoiceMessageView extends StatefulWidget {
   const VoiceMessageView({
@@ -49,6 +51,8 @@ class VoiceMessageView extends StatefulWidget {
 class _VoiceMessageViewState extends State<VoiceMessageView> {
   late PlayerController controller;
   late StreamSubscription<PlayerState> playerStateSubscription;
+  late Future<Response> futureResponse;
+  late String tempDir;
 
   final ValueNotifier<PlayerState> _playerState =
       ValueNotifier(PlayerState.stopped);
@@ -60,15 +64,35 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   @override
   void initState() {
     super.initState();
-    controller = PlayerController()
-      ..preparePlayer(
-        path: widget.message.message,
-        noOfSamples: widget.config?.playerWaveStyle
-                ?.getSamplesForWidth(widget.screenWidth * 0.5) ??
-            playerWaveStyle.getSamplesForWidth(widget.screenWidth * 0.5),
-      ).whenComplete(() => widget.onMaxDuration?.call(controller.maxDuration));
-    playerStateSubscription = controller.onPlayerStateChanged
-        .listen((state) => _playerState.value = state);
+
+    getApplicationDocumentsDirectory().then((value) {
+      tempDir = value.path;
+    });
+
+    controller = PlayerController();
+    futureResponse = get(Uri.parse(widget.message.message));
+    futureResponse.then((response) {
+      Uint8List bytes = response.bodyBytes;
+      File file =
+          File('$tempDir/${extractFileNameFromUrl(widget.message.message)}');
+
+      if (response.statusCode == 200) {
+        file.writeAsBytes(bytes).then((_) {
+          controller
+              .preparePlayer(
+                path: file.path,
+                noOfSamples: widget.config?.playerWaveStyle
+                        ?.getSamplesForWidth(widget.screenWidth * 0.5) ??
+                    playerWaveStyle
+                        .getSamplesForWidth(widget.screenWidth * 0.5),
+              )
+              .whenComplete(
+                  () => widget.onMaxDuration?.call(controller.maxDuration));
+        });
+      }
+      playerStateSubscription = controller.onPlayerStateChanged
+          .listen((state) => _playerState.value = state);
+    });
   }
 
   @override
@@ -77,6 +101,14 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
     controller.dispose();
     _playerState.dispose();
     super.dispose();
+  }
+
+  String extractFileNameFromUrl(String url) {
+    List<String> urlParts = url.split('/');
+    String fileName = urlParts.last.split('?').first;
+    String fileID = fileName.split('-').last.split('.').first;
+    String fileExtension = fileName.split('-').last.split('.').last;
+    return fileID + fileExtension;
   }
 
   @override
