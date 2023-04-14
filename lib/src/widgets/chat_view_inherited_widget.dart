@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:chatview/chatview.dart';
+import 'package:flutter/material.dart';
 
 /// This widget for alternative of excessive amount of passing arguments
 /// over widgets.
@@ -19,6 +19,8 @@ class ChatViewInheritedWidget extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<ChatViewInheritedWidget>();
 
   @override
-  bool updateShouldNotify(covariant ChatViewInheritedWidget oldWidget) =>
-      oldWidget.featureActiveConfig != featureActiveConfig;
+  bool updateShouldNotify(covariant ChatViewInheritedWidget oldWidget) {
+    return oldWidget.featureActiveConfig != featureActiveConfig ||
+        oldWidget.chatController != chatController;
+  }
 }
