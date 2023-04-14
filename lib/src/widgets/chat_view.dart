@@ -25,6 +25,7 @@ import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:chatview/src/widgets/chatview_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart';
+
 import '../values/custom_time_messages.dart';
 import 'send_message_widget.dart';
 
@@ -220,7 +221,7 @@ class _ChatViewState extends State<ChatView>
                       chatViewState: chatViewState,
                       onReloadButtonTap: chatViewStateConfig?.onReloadButtonTap,
                     )
-                  else if (chatViewState.hasMessages)
+                  else if (chatViewState.hasMessages || chatViewState.isSending)
                     ValueListenableBuilder<ReplyMessage>(
                       valueListenable: replyMessage,
                       builder: (_, state, child) {
@@ -259,6 +260,7 @@ class _ChatViewState extends State<ChatView>
                       onReplyCallback: (reply) => replyMessage.value = reply,
                       onReplyCloseCallback: () =>
                           replyMessage.value = const ReplyMessage(),
+                      isSending: chatViewState.isSending,
                     ),
                 ],
               ),

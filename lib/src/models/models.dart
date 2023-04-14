@@ -27,6 +27,7 @@ export 'emoji_message_configuration.dart';
 export 'feature_active_config.dart';
 export 'image_message.dart';
 export 'link_preview_configuration.dart';
+export 'loading_data_configuration.dart';
 export 'message.dart';
 export 'message_configuration.dart';
 export 'message_list_configuration.dart';

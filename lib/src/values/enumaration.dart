@@ -40,7 +40,7 @@ enum TypeWriterStatus { typing, typed }
 enum MessageStatus { read, delivered, undelivered, pending }
 
 /// Types of states
-enum ChatViewState { hasMessages, noData, loading, error }
+enum ChatViewState { hasMessages, noData, loading, sending, error }
 
 enum ShowReceiptsIn { all, lastMessage }
 
@@ -48,6 +48,8 @@ extension ChatViewStateExtension on ChatViewState {
   bool get hasMessages => this == ChatViewState.hasMessages;
 
   bool get isLoading => this == ChatViewState.loading;
+
+  bool get isSending => this == ChatViewState.sending;
 
   bool get isError => this == ChatViewState.error;
 
