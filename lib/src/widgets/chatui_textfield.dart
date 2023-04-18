@@ -248,62 +248,24 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                     } else {
                       return Row(
                         children: [
-                          if (!isRecordingValue) ...[
+                          if (!isRecordingValue)
                             IconButton(
                               constraints: const BoxConstraints(),
-                              onPressed: () =>
-                                  _onImageIconPressed(ImageSource.camera),
+                              onPressed: () => showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) =>
+                                      buildAttachment(isRecordingValue)),
                               icon: imagePickerIconsConfig
                                       ?.cameraImagePickerIcon ??
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    color:
-                                        imagePickerIconsConfig?.cameraIconColor,
-                                  ),
+                                  const Icon(Icons.attach_file),
                             ),
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () =>
-                                  _onVideoIconPressed(ImageSource.camera),
-                              icon: videoPickerIconsConfig
-                                      ?.cameraVideoPickerIcon ??
-                                  Icon(
-                                    Icons.videocam_outlined,
-                                    color:
-                                        videoPickerIconsConfig?.cameraIconColor,
-                                  ),
-                            ),
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () =>
-                                  _onImageIconPressed(ImageSource.gallery),
-                              icon: imagePickerIconsConfig
-                                      ?.galleryImagePickerIcon ??
-                                  Icon(
-                                    Icons.image,
-                                    color: imagePickerIconsConfig
-                                        ?.galleryIconColor,
-                                  ),
-                            ),
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () =>
-                                  _onVideoIconPressed(ImageSource.gallery),
-                              icon: videoPickerIconsConfig
-                                      ?.galleryVideoPickerIcon ??
-                                  Icon(
-                                    Icons.video_collection,
-                                    color: videoPickerIconsConfig
-                                        ?.galleryIconColor,
-                                  ),
-                            ),
-                          ],
                           if (widget.sendMessageConfig?.allowRecordingVoice ??
                               true &&
                                   Platform.isIOS &&
                                   Platform.isAndroid &&
                                   !kIsWeb)
                             IconButton(
+                              constraints: const BoxConstraints(),
                               onPressed: _recordOrStop,
                               icon: (isRecordingValue
                                       ? voiceRecordingConfig?.micIcon
@@ -312,9 +274,10 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                                       ? Icons.stop
                                       : Icons.mic),
                               color: voiceRecordingConfig?.recorderIconColor,
-                            )
+                            ),
                         ],
                       );
+                      buildAttachment(isRecordingValue);
                     }
                   },
                 ),
@@ -322,6 +285,49 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
           );
         },
       ),
+    );
+  }
+
+  Column buildAttachment(bool isRecordingValue) {
+    return Column(
+      children: [
+        ElevatedButton.icon(
+          onPressed: () => _onImageIconPressed(ImageSource.camera),
+          icon: imagePickerIconsConfig?.cameraImagePickerIcon ??
+              Icon(
+                Icons.camera_alt_outlined,
+                color: imagePickerIconsConfig?.cameraIconColor,
+              ),
+          label: const Text('Prendre une photo'), // <-- Text
+        ),
+        ElevatedButton.icon(
+          onPressed: () => _onVideoIconPressed(ImageSource.camera),
+          icon: videoPickerIconsConfig?.cameraVideoPickerIcon ??
+              Icon(
+                Icons.videocam_outlined,
+                color: videoPickerIconsConfig?.cameraIconColor,
+              ),
+          label: const Text('Prendre une vidéo'), // <-- Text
+        ),
+        ElevatedButton.icon(
+          onPressed: () => _onImageIconPressed(ImageSource.gallery),
+          icon: imagePickerIconsConfig?.galleryImagePickerIcon ??
+              Icon(
+                Icons.image,
+                color: imagePickerIconsConfig?.galleryIconColor,
+              ),
+          label: const Text('Galerie photo'), // <-- Text
+        ),
+        ElevatedButton.icon(
+          onPressed: () => _onVideoIconPressed(ImageSource.gallery),
+          icon: videoPickerIconsConfig?.cameraVideoPickerIcon ??
+              Icon(
+                Icons.videocam_outlined,
+                color: videoPickerIconsConfig?.cameraIconColor,
+              ),
+          label: const Text('Galerie vidéo'), // <-- Text
+        ),
+      ],
     );
   }
 
