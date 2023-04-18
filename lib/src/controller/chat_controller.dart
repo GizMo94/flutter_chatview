@@ -74,6 +74,12 @@ class ChatController {
     messageStreamController.sink.add(initialMessageList);
   }
 
+  void addAllMessages(List<Message> messages) {
+    initialMessageList.clear();
+    initialMessageList.addAll(messages);
+    messageStreamController.sink.add(initialMessageList);
+  }
+
   /// Function for setting reaction on specific chat bubble
   void setReaction({
     required String emoji,
