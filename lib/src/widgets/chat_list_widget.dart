@@ -237,7 +237,7 @@ class _ChatListWidgetState extends State<ChatListWidget>
   void _pagination() {
     if (widget.loadMoreData == null || widget.isLastPage == true) return;
     if ((scrollController.position.pixels ==
-            scrollController.position.minScrollExtent) &&
+            scrollController.position.maxScrollExtent) &&
         !_isNextPageLoading.value) {
       _isNextPageLoading.value = true;
       widget.loadMoreData!()
