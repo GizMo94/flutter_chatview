@@ -134,4 +134,17 @@ class ChatController {
   /// Function for getting ChatUser object from user id
   ChatUser getUserFromId(String userId) =>
       chatUsers.firstWhere((element) => element.id == userId);
+
+  ChatController copyWith({
+    List<Message>? initialMessageList,
+    ScrollController? scrollController,
+    List<ChatUser>? chatUsers,
+    StreamController<List<Message>>? messageStreamController,
+  }) {
+    return ChatController(
+      initialMessageList: initialMessageList ?? this.initialMessageList,
+      scrollController: scrollController ?? this.scrollController,
+      chatUsers: chatUsers ?? this.chatUsers,
+    );
+  }
 }
