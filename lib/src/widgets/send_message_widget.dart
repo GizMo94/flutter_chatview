@@ -319,6 +319,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   void _onImageSelected(String imagePath, String error) {
     debugPrint('Call in Send Message Widget');
     if (imagePath.isNotEmpty) {
+      Navigator.pop(context);
       widget.onSendTap.call(imagePath, replyMessage, MessageType.image);
       _assignRepliedMessage();
     }
@@ -327,6 +328,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   void _onVideoSelected(String videoPath, String error) {
     debugPrint('Call in Send Message Widget');
     if (videoPath.isNotEmpty) {
+      Navigator.pop(context);
       widget.onSendTap.call(videoPath, replyMessage, MessageType.video);
       _assignRepliedMessage();
     }

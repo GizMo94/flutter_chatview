@@ -253,6 +253,12 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                               constraints: const BoxConstraints(),
                               onPressed: () => showModalBottomSheet(
                                   context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    // <-- SEE HERE
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25.0),
+                                    ),
+                                  ),
                                   builder: (context) =>
                                       buildAttachment(isRecordingValue)),
                               icon: imagePickerIconsConfig
@@ -290,42 +296,43 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
 
   Column buildAttachment(bool isRecordingValue) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        ElevatedButton.icon(
-          onPressed: () => _onImageIconPressed(ImageSource.camera),
-          icon: imagePickerIconsConfig?.cameraImagePickerIcon ??
+        ListTile(
+          onTap: () => _onImageIconPressed(ImageSource.camera),
+          leading: imagePickerIconsConfig?.cameraImagePickerIcon ??
               Icon(
                 Icons.camera_alt_outlined,
                 color: imagePickerIconsConfig?.cameraIconColor,
               ),
-          label: const Text('Prendre une photo'), // <-- Text
+          title: const Text('Prendre une photo'), // <-- Text
         ),
-        ElevatedButton.icon(
-          onPressed: () => _onVideoIconPressed(ImageSource.camera),
-          icon: videoPickerIconsConfig?.cameraVideoPickerIcon ??
+        ListTile(
+          onTap: () => _onVideoIconPressed(ImageSource.camera),
+          leading: videoPickerIconsConfig?.cameraVideoPickerIcon ??
               Icon(
                 Icons.videocam_outlined,
                 color: videoPickerIconsConfig?.cameraIconColor,
               ),
-          label: const Text('Prendre une vidéo'), // <-- Text
+          title: const Text('Prendre une vidéo'), // <-- Text
         ),
-        ElevatedButton.icon(
-          onPressed: () => _onImageIconPressed(ImageSource.gallery),
-          icon: imagePickerIconsConfig?.galleryImagePickerIcon ??
+        ListTile(
+          onTap: () => _onImageIconPressed(ImageSource.gallery),
+          leading: imagePickerIconsConfig?.galleryImagePickerIcon ??
               Icon(
                 Icons.image,
                 color: imagePickerIconsConfig?.galleryIconColor,
               ),
-          label: const Text('Galerie photo'), // <-- Text
+          title: const Text('Galerie photo'), // <-- Text
         ),
-        ElevatedButton.icon(
-          onPressed: () => _onVideoIconPressed(ImageSource.gallery),
-          icon: videoPickerIconsConfig?.cameraVideoPickerIcon ??
+        ListTile(
+          onTap: () => _onVideoIconPressed(ImageSource.gallery),
+          leading: videoPickerIconsConfig?.cameraVideoPickerIcon ??
               Icon(
                 Icons.videocam_outlined,
                 color: videoPickerIconsConfig?.cameraIconColor,
               ),
-          label: const Text('Galerie vidéo'), // <-- Text
+          title: const Text('Galerie vidéo'), // <-- Text
         ),
       ],
     );
