@@ -329,7 +329,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
           onTap: () => _onVideoIconPressed(ImageSource.gallery),
           leading: videoPickerIconsConfig?.cameraVideoPickerIcon ??
               Icon(
-                Icons.videocam_outlined,
+                Icons.video_library,
                 color: videoPickerIconsConfig?.cameraIconColor,
               ),
           title: const Text('Galerie vidéo'), // <-- Text
