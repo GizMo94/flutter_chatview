@@ -283,7 +283,9 @@ class _ChatViewState extends State<ChatView>
   ) {
     if (widget.sendMessageBuilder == null) {
       if (widget.onSendTap != null) {
-        FocusScope.of(context).unfocus();
+        if (!messageType.isText) {
+          FocusScope.of(context).unfocus();
+        }
         widget.onSendTap!(message, replyMessage, messageType);
       }
       _assignReplyMessage();
