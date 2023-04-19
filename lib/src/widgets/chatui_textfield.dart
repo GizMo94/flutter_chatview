@@ -263,7 +263,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                                       buildAttachment(isRecordingValue)),
                               icon: imagePickerIconsConfig
                                       ?.cameraImagePickerIcon ??
-                                  const Icon(Icons.attach_file),
+                                  const Icon(Icons.add_outlined),
                             ),
                           if (widget.sendMessageConfig?.allowRecordingVoice ??
                               true &&
