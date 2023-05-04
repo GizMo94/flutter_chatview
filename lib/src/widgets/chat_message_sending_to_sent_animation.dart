@@ -40,15 +40,21 @@ class _SendingMessageAnimatingWidgetState
     return isVisible
         ? const SizedBox()
         : isSent
-            ? const Icon(
-                Icons.check_circle_rounded,
-                color: Colors.grey,
-                size: 12,
+            ? const Padding(
+                padding: EdgeInsets.only(right: 4.0),
+                child: Icon(
+                  Icons.check_circle_rounded,
+                  color: Colors.grey,
+                  size: 12,
+                ),
               )
-            : const Icon(
-                Icons.circle_outlined,
-                color: Colors.grey,
-                size: 12,
+            : const Padding(
+                padding: EdgeInsets.only(right: 4.0),
+                child: Icon(
+                  Icons.circle_outlined,
+                  color: Colors.grey,
+                  size: 12,
+                ),
               );
   }
 }
