@@ -114,7 +114,7 @@ extension ChatViewStateTitleExtension on String? {
       case ChatViewState.hasMessages:
         return this ?? '';
       case ChatViewState.noData:
-        return this ?? 'No Messages';
+        return this ?? 'Pas de message';
       case ChatViewState.loading:
       case ChatViewState.sending:
         return this ?? '';

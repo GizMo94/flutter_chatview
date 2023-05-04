@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
 
@@ -44,19 +43,17 @@ class _SendingMessageAnimatingWidgetState
       padding: EdgeInsets.only(right: isSent ? 5 : 8.0, bottom: isSent ? 8 : 2),
       child: isVisible
           ? const SizedBox()
-          : Transform.rotate(
-              angle: !isSent ? pi / 10 : -pi / 12,
-              child: const Padding(
-                padding: EdgeInsets.only(
-                  left: 2,
-                  bottom: 5,
-                ),
-                child: Icon(
-                  Icons.send,
+          : isSent
+              ? const Icon(
+                  Icons.check_circle_rounded,
+                  color: Colors.grey,
+                  size: 12,
+                )
+              : const Icon(
+                  Icons.circle_outlined,
                   color: Colors.grey,
                   size: 12,
                 ),
-              )),
     );
   }
 }
