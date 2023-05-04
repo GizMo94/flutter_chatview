@@ -37,23 +37,18 @@ class _SendingMessageAnimatingWidgetState
   @override
   Widget build(BuildContext context) {
     _attachOnStatusChangeListeners();
-    return AnimatedPadding(
-      curve: Curves.easeInOutExpo,
-      duration: const Duration(seconds: 1),
-      padding: EdgeInsets.only(right: isSent ? 5 : 8.0, bottom: isSent ? 8 : 2),
-      child: isVisible
-          ? const SizedBox()
-          : isSent
-              ? const Icon(
-                  Icons.check_circle_rounded,
-                  color: Colors.grey,
-                  size: 12,
-                )
-              : const Icon(
-                  Icons.circle_outlined,
-                  color: Colors.grey,
-                  size: 12,
-                ),
-    );
+    return isVisible
+        ? const SizedBox()
+        : isSent
+            ? const Icon(
+                Icons.check_circle_rounded,
+                color: Colors.grey,
+                size: 12,
+              )
+            : const Icon(
+                Icons.circle_outlined,
+                color: Colors.grey,
+                size: 12,
+              );
   }
 }
