@@ -20,7 +20,6 @@
  * SOFTWARE.
  */
 import 'package:chatview/src/models/models.dart';
-import 'package:chatview/src/models/video_message_configuration.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:chatview/src/widgets/share_icon.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +95,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        if (widget.isMessageBySender) iconButton,
+        //if (widget.isMessageBySender) iconButton,
         Stack(
           children: [
             GestureDetector(
@@ -147,7 +146,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
               ),
           ],
         ),
-        if (!widget.isMessageBySender) iconButton,
+        //if (!widget.isMessageBySender) iconButton,
       ],
     );
   }
