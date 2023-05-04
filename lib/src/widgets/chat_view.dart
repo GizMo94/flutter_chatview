@@ -54,7 +54,6 @@ class ChatView extends StatefulWidget {
     required this.chatViewState,
     ChatViewStateConfiguration? chatViewStateConfig,
     this.featureActiveConfig = const FeatureActiveConfig(),
-    this.loadingDataConfiguration,
   })  : chatBackgroundConfig =
             chatBackgroundConfig ?? const ChatBackgroundConfiguration(),
         chatViewStateConfig =
@@ -134,9 +133,6 @@ class ChatView extends StatefulWidget {
 
   /// Provides parameter so user can assign ChatViewAppbar.
   final Widget? appBar;
-
-  ///
-  final LoadingDataConfiguration? loadingDataConfiguration;
 
   @override
   State<ChatView> createState() => _ChatViewState();
@@ -259,13 +255,11 @@ class _ChatViewState extends State<ChatView>
                       chatController: chatController,
                       sendMessageBuilder: widget.sendMessageBuilder,
                       sendMessageConfig: widget.sendMessageConfig,
-                      loadingDataConfiguration: widget.loadingDataConfiguration,
                       backgroundColor: chatBackgroundConfig.backgroundColor,
                       onSendTap: _onSendTap,
                       onReplyCallback: (reply) => replyMessage.value = reply,
                       onReplyCloseCallback: () =>
                           replyMessage.value = const ReplyMessage(),
-                      isSending: chatViewState.isSending,
                     ),
                 ],
               ),

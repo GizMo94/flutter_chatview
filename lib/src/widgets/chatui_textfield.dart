@@ -42,8 +42,6 @@ class ChatUITextField extends StatefulWidget {
     required this.onRecordingComplete,
     required this.onImageSelected,
     required this.onVideoSelected,
-    required this.isSending,
-    this.loadingDataConfiguration,
   }) : super(key: key);
 
   /// Provides configuration of default text field in chat.
@@ -66,12 +64,6 @@ class ChatUITextField extends StatefulWidget {
 
   /// Provides callback when user select videos from camera/gallery.
   final StringsCallBack onVideoSelected;
-
-  ///
-  final bool isSending;
-
-  ///
-  final LoadingDataConfiguration? loadingDataConfiguration;
 
   @override
   State<ChatUITextField> createState() => _ChatUITextFieldState();
@@ -216,77 +208,60 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
                     ),
                   ),
                 ),
-              if (widget.isSending)
-                Padding(
-                  padding: EdgeInsets.all(
-                      widget.loadingDataConfiguration?.padding ?? 4),
-                  child: SizedBox(
-                      width: widget.loadingDataConfiguration?.width ?? 20,
-                      height: widget.loadingDataConfiguration?.height ?? 20,
-                      child: CircularProgressIndicator(
-                        color: widget.loadingDataConfiguration?.color ??
-                            Colors.green,
-                        strokeWidth:
-                            widget.loadingDataConfiguration?.stroke ?? 2,
-                      )),
-                ),
-              if (!widget.isSending)
-                ValueListenableBuilder<String>(
-                  valueListenable: _inputText,
-                  builder: (_, inputTextValue, child) {
-                    if (inputTextValue.isNotEmpty) {
-                      return IconButton(
-                        color: sendMessageConfig?.defaultSendButtonColor ??
-                            Colors.green,
-                        onPressed: () {
-                          widget.onPressed();
-                          _inputText.value = '';
-                        },
-                        icon: sendMessageConfig?.sendButtonIcon ??
-                            const Icon(Icons.send),
-                      );
-                    } else {
-                      return Row(
-                        children: [
-                          if (!isRecordingValue)
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () => showModalBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                    // <-- SEE HERE
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(25.0),
-                                    ),
+              ValueListenableBuilder<String>(
+                valueListenable: _inputText,
+                builder: (_, inputTextValue, child) {
+                  if (inputTextValue.isNotEmpty) {
+                    return IconButton(
+                      color: sendMessageConfig?.defaultSendButtonColor ??
+                          Colors.green,
+                      onPressed: () {
+                        widget.onPressed();
+                        _inputText.value = '';
+                      },
+                      icon: sendMessageConfig?.sendButtonIcon ??
+                          const Icon(Icons.send),
+                    );
+                  } else {
+                    return Row(
+                      children: [
+                        if (!isRecordingValue)
+                          IconButton(
+                            constraints: const BoxConstraints(),
+                            onPressed: () => showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  // <-- SEE HERE
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0),
                                   ),
-                                  builder: (context) =>
-                                      buildAttachment(isRecordingValue)),
-                              icon: imagePickerIconsConfig
-                                      ?.cameraImagePickerIcon ??
-                                  const Icon(Icons.add_outlined),
-                            ),
-                          if (widget.sendMessageConfig?.allowRecordingVoice ??
-                              true &&
-                                  Platform.isIOS &&
-                                  Platform.isAndroid &&
-                                  !kIsWeb)
-                            IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: _recordOrStop,
-                              icon: (isRecordingValue
-                                      ? voiceRecordingConfig?.micIcon
-                                      : voiceRecordingConfig?.stopIcon) ??
-                                  Icon(isRecordingValue
-                                      ? Icons.stop
-                                      : Icons.mic),
-                              color: voiceRecordingConfig?.recorderIconColor,
-                            ),
-                        ],
-                      );
-                      buildAttachment(isRecordingValue);
-                    }
-                  },
-                ),
+                                ),
+                                builder: (context) =>
+                                    buildAttachment(isRecordingValue)),
+                            icon:
+                                imagePickerIconsConfig?.cameraImagePickerIcon ??
+                                    const Icon(Icons.add_outlined),
+                          ),
+                        if (widget.sendMessageConfig?.allowRecordingVoice ??
+                            true &&
+                                Platform.isIOS &&
+                                Platform.isAndroid &&
+                                !kIsWeb)
+                          IconButton(
+                            constraints: const BoxConstraints(),
+                            onPressed: _recordOrStop,
+                            icon: (isRecordingValue
+                                    ? voiceRecordingConfig?.micIcon
+                                    : voiceRecordingConfig?.stopIcon) ??
+                                Icon(isRecordingValue ? Icons.stop : Icons.mic),
+                            color: voiceRecordingConfig?.recorderIconColor,
+                          ),
+                      ],
+                    );
+                    buildAttachment(isRecordingValue);
+                  }
+                },
+              ),
             ],
           );
         },

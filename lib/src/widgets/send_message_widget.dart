@@ -42,8 +42,6 @@ class SendMessageWidget extends StatefulWidget {
     this.sendMessageBuilder,
     this.onReplyCallback,
     this.onReplyCloseCallback,
-    required this.isSending,
-    this.loadingDataConfiguration,
   }) : super(key: key);
 
   /// Provides call back when user tap on send button on text field.
@@ -66,12 +64,6 @@ class SendMessageWidget extends StatefulWidget {
 
   /// Provides controller for accessing few function for running chat.
   final ChatController chatController;
-
-  ///
-  final bool isSending;
-
-  ///
-  final LoadingDataConfiguration? loadingDataConfiguration;
 
   @override
   State<SendMessageWidget> createState() => SendMessageWidgetState();
@@ -240,12 +232,9 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                           textEditingController: _textEditingController,
                           onPressed: _onPressed,
                           sendMessageConfig: widget.sendMessageConfig,
-                          loadingDataConfiguration:
-                              widget.loadingDataConfiguration,
                           onRecordingComplete: _onRecordingComplete,
                           onImageSelected: _onImageSelected,
                           onVideoSelected: _onVideoSelected,
-                          isSending: widget.isSending,
                         )
                       ],
                     ),
