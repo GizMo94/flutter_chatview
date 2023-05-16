@@ -117,6 +117,7 @@ class FileMessageView extends StatelessWidget {
                             BorderRadius.circular(14),
                         child: const Icon(
                           Icons.file_copy_outlined,
+                          color: Colors.white,
                           size: 32,
                         ),
                       ),
