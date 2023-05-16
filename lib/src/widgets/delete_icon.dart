@@ -19,45 +19,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import 'package:chatview/chatview.dart';
 import 'package:chatview/src/models/delete_icon_configuration.dart';
-import 'package:chatview/src/models/share_icon_configuration.dart';
 import 'package:flutter/material.dart';
 
-import '../values/typedefs.dart';
-
-class VideoMessageConfiguration {
-  /// Provides configuration of share button while image message is appeared.
-  final ShareIconConfiguration? shareIconConfig;
+class DeleteIcon extends StatelessWidget {
+  const DeleteIcon({
+    Key? key,
+    this.deleteIconConfiguration,
+    required this.message,
+  }) : super(key: key);
 
   ///
-  final DeleteIconConfiguration? deleteIconConfig;
+  final DeleteIconConfiguration? deleteIconConfiguration;
 
-  /// Provides callback when user taps on image message.
-  final StringCallback? onTap;
+  ///
+  final Message message;
 
-  /// Used for giving height of image message.
-  final double? height;
-
-  /// Used for giving width of image message.
-  final double? width;
-
-  /// Used for giving padding of image message.
-  final EdgeInsetsGeometry? padding;
-
-  /// Used for giving margin of image message.
-  final EdgeInsetsGeometry? margin;
-
-  /// Used for giving border radius of image message.
-  final BorderRadius? borderRadius;
-
-  const VideoMessageConfiguration({
-    this.shareIconConfig,
-    this.deleteIconConfig,
-    this.onTap,
-    this.height,
-    this.width,
-    this.padding,
-    this.margin,
-    this.borderRadius,
-  });
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => deleteIconConfiguration?.onPressed != null
+          ? deleteIconConfiguration?.onPressed!(message)
+          : null,
+      padding: deleteIconConfiguration?.margin ?? const EdgeInsets.all(8.0),
+      icon: deleteIconConfiguration?.icon ??
+          Container(
+            alignment: Alignment.center,
+            padding:
+                deleteIconConfiguration?.padding ?? const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: deleteIconConfiguration?.defaultIconBackgroundColor ??
+                  Colors.grey.shade300,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.delete,
+              color: deleteIconConfiguration?.defaultIconColor ?? Colors.black,
+              size: 16,
+            ),
+          ),
+    );
+  }
 }

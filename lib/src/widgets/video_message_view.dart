@@ -20,6 +20,7 @@
  * SOFTWARE.
  */
 import 'package:chatview/src/models/models.dart';
+import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:chatview/src/widgets/share_icon.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,11 @@ class _VideoMessageViewState extends State<VideoMessageView> {
         imageUrl: videoUrl,
       );
 
+  Widget get deleteButton => DeleteIcon(
+        deleteIconConfiguration: widget.videoMessageConfig?.deleteIconConfig,
+        message: widget.message,
+      );
+
   late VideoPlayerController _controller;
 
   @override
@@ -95,7 +101,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        //if (widget.isMessageBySender) iconButton,
+        if (widget.isMessageBySender) deleteButton,
         Stack(
           children: [
             GestureDetector(

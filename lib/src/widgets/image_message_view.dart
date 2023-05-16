@@ -24,6 +24,7 @@ import 'dart:io';
 
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/models/models.dart';
+import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'reaction_widget.dart';
@@ -65,6 +66,11 @@ class ImageMessageView extends StatelessWidget {
         imageUrl: imageUrl,
       );
 
+  Widget get deleteButton => DeleteIcon(
+        deleteIconConfiguration: imageMessageConfig?.deleteIconConfig,
+        message: message,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -72,7 +78,7 @@ class ImageMessageView extends StatelessWidget {
       mainAxisAlignment:
           isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        //if (isMessageBySender) iconButton,
+        if (isMessageBySender) deleteButton,
         Stack(
           children: [
             GestureDetector(

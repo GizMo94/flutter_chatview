@@ -54,6 +54,12 @@ class Message {
   /// Provides max duration for recorded voice message.
   Duration? voiceMessageDuration;
 
+  ///
+  final String? name;
+
+  ///
+  final double? size;
+
   Message({
     this.id = '',
     required this.message,
@@ -63,6 +69,8 @@ class Message {
     Reaction? reaction,
     this.messageType = MessageType.text,
     this.voiceMessageDuration,
+    this.size,
+    this.name,
     MessageStatus status = MessageStatus.pending,
   })  : reaction = reaction ?? Reaction(reactions: [], reactedUserIds: []),
         key = GlobalKey(),
@@ -99,7 +107,9 @@ class Message {
       reaction: Reaction.fromJson(json["reaction"]),
       messageType: json["message_type"],
       voiceMessageDuration: json["voice_message_duration"],
-      status: json['status']);
+      status: json['status'],
+      size: json['size'],
+      name: json['name']);
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -110,6 +120,8 @@ class Message {
         'reaction': reaction.toJson(),
         'message_type': messageType,
         'voice_message_duration': voiceMessageDuration,
-        'status': status.name
+        'status': status.name,
+        'size': size,
+        'name': name
       };
 }

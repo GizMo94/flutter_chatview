@@ -21,6 +21,9 @@
  */
 import 'package:chatview/src/models/file_message.dart';
 import 'package:chatview/src/models/models.dart';
+import 'package:chatview/src/utils/constants/constants.dart';
+import 'package:chatview/src/widgets/delete_icon.dart';
+import 'package:chatview/src/widgets/share_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'reaction_widget.dart';
@@ -56,54 +59,107 @@ class FileMessageView extends StatelessWidget {
 
   String get fileUrl => message.message;
 
+  Widget get iconButton => ShareIcon(
+        shareIconConfig: fileMessageConfiguration?.shareIconConfig,
+        imageUrl: fileUrl,
+      );
+
+  Widget get deleteButton => DeleteIcon(
+        deleteIconConfiguration: fileMessageConfiguration?.deleteIconConfig,
+        message: message,
+      );
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment:
-          isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        //if (isMessageBySender) iconButton,
-        Stack(
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: isMessageBySender
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () => fileMessageConfiguration?.onTap != null
-                  ? fileMessageConfiguration?.onTap!(fileUrl)
-                  : null,
-              child: Transform.scale(
-                scale: highlightImage ? highlightScale : 1.0,
-                alignment: isMessageBySender
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: Container(
-                  padding: fileMessageConfiguration?.padding ?? EdgeInsets.zero,
-                  margin: fileMessageConfiguration?.margin ??
-                      EdgeInsets.only(
-                        top: 6,
-                        right: isMessageBySender ? 6 : 0,
-                        left: isMessageBySender ? 0 : 6,
-                        bottom: message.reaction.reactions.isNotEmpty ? 15 : 0,
+            if (isMessageBySender) deleteButton,
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: () => fileMessageConfiguration?.onTap != null
+                      ? fileMessageConfiguration?.onTap!(fileUrl)
+                      : null,
+                  child: Transform.scale(
+                    scale: highlightImage ? highlightScale : 1.0,
+                    alignment: isMessageBySender
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
+                    child: Container(
+                      padding:
+                          fileMessageConfiguration?.padding ?? EdgeInsets.zero,
+                      margin: fileMessageConfiguration?.margin ??
+                          EdgeInsets.only(
+                            top: 6,
+                            right: isMessageBySender ? 6 : 0,
+                            left: isMessageBySender ? 0 : 6,
+                            bottom:
+                                message.reaction.reactions.isNotEmpty ? 15 : 0,
+                          ),
+                      decoration: BoxDecoration(
+                        color: isMessageBySender
+                            ? fileMessageConfiguration?.color ?? Colors.purple
+                            : Colors.grey.shade500,
+                        borderRadius: fileMessageConfiguration?.borderRadius ??
+                            BorderRadius.circular(replyBorderRadius2),
                       ),
-                  height: fileMessageConfiguration?.height ?? 200,
-                  width: fileMessageConfiguration?.width ?? 150,
-                  child: ClipRRect(
-                    borderRadius: fileMessageConfiguration?.borderRadius ??
-                        BorderRadius.circular(14),
-                    child: const Icon(Icons.file_copy_outlined),
+                      height: fileMessageConfiguration?.height ?? 75,
+                      width: fileMessageConfiguration?.width ?? 75,
+                      child: ClipRRect(
+                        borderRadius: fileMessageConfiguration?.borderRadius ??
+                            BorderRadius.circular(14),
+                        child: const Icon(
+                          Icons.file_copy_outlined,
+                          size: 32,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                if (message.reaction.reactions.isNotEmpty)
+                  ReactionWidget(
+                    isMessageBySender: isMessageBySender,
+                    reaction: message.reaction,
+                    messageReactionConfig: messageReactionConfig,
+                  ),
+              ],
             ),
-            if (message.reaction.reactions.isNotEmpty)
-              ReactionWidget(
-                isMessageBySender: isMessageBySender,
-                reaction: message.reaction,
-                messageReactionConfig: messageReactionConfig,
-              ),
+            //if (!isMessageBySender) iconButton,
           ],
         ),
-        //if (!isMessageBySender) iconButton,
+        Padding(
+          padding: const EdgeInsets.only(right: 6.0, top: 2),
+          child: Text(
+              '${message.name} - ${message.size != null ? formatSize(message.size!) : ''}',
+              style: const TextStyle(color: Colors.grey, fontSize: 12)),
+        ),
       ],
     );
+  }
+
+  String formatSize(double size) {
+    const int kiloByte = 1024;
+    const int megaByte = kiloByte * 1024;
+    const int gigaByte = megaByte * 1024;
+
+    if (size >= gigaByte) {
+      final double sizeInGB = size / gigaByte;
+      return '${sizeInGB.toStringAsFixed(2)} Go';
+    } else if (size >= megaByte) {
+      final double sizeInMB = size / megaByte;
+      return '${sizeInMB.toStringAsFixed(2)} Mo';
+    } else if (size >= kiloByte) {
+      final double sizeInKB = size / kiloByte;
+      return '${sizeInKB.toStringAsFixed(2)} ko';
+    } else {
+      return '${size.toStringAsFixed(2)} o';
+    }
   }
 }

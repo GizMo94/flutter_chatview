@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/share_icon_configuration.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,9 @@ import '../values/typedefs.dart';
 class ImageMessageConfiguration {
   /// Provides configuration of share button while image message is appeared.
   final ShareIconConfiguration? shareIconConfig;
+
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
 
   /// Provides callback when user taps on image message.
   final StringCallback? onTap;
@@ -48,6 +52,7 @@ class ImageMessageConfiguration {
 
   const ImageMessageConfiguration({
     this.shareIconConfig,
+    this.deleteIconConfig,
     this.onTap,
     this.height,
     this.width,

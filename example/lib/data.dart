@@ -108,9 +108,12 @@ class Data {
     ),
     Message(
       id: '12',
-      message: "🤩🤩",
+      message: "pv1681468698_SIGNED.pdf",
+      name: "pv1681468698_SIGNED.pdf",
+      size: 58051,
       createdAt: DateTime.now(),
-      sendBy: '2',
+      sendBy: '1',
+      messageType: MessageType.file,
       status: MessageStatus.read,
     ),
   ];

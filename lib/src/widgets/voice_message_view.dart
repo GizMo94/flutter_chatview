@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/chatview.dart';
+import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,11 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
 
   PlayerWaveStyle playerWaveStyle = const PlayerWaveStyle(scaleFactor: 70);
 
+  Widget get deleteButton => DeleteIcon(
+        deleteIconConfiguration: widget.config?.deleteIconConfig,
+        message: widget.message,
+      );
+
   @override
   void initState() {
     super.initState();
@@ -113,33 +119,42 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: widget.isMessageBySender
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: [
-        Container(
-          decoration: widget.config?.decoration ??
-              BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: widget.isMessageBySender
-                    ? widget.outgoingChatBubbleConfig?.color
-                    : widget.inComingChatBubbleConfig?.color,
-              ),
-          padding: widget.config?.padding ??
-              const EdgeInsets.symmetric(horizontal: 8),
-          margin: widget.config?.margin ??
-              EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: widget.message.reaction.reactions.isNotEmpty ? 15 : 0,
-              ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ValueListenableBuilder<PlayerState>(
-                builder: (context, state, child) {
-                  return IconButton(
-                    onPressed: _playOrPause,
-                    icon:
-                        state.isStopped || state.isPaused || state.isInitialised
+        if (widget.isMessageBySender) deleteButton,
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              decoration: widget.config?.decoration ??
+                  BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: widget.isMessageBySender
+                        ? widget.outgoingChatBubbleConfig?.color
+                        : widget.inComingChatBubbleConfig?.color,
+                  ),
+              padding: widget.config?.padding ??
+                  const EdgeInsets.symmetric(horizontal: 8),
+              margin: widget.config?.margin ??
+                  EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical:
+                        widget.message.reaction.reactions.isNotEmpty ? 15 : 0,
+                  ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ValueListenableBuilder<PlayerState>(
+                    builder: (context, state, child) {
+                      return IconButton(
+                        onPressed: _playOrPause,
+                        icon: state.isStopped ||
+                                state.isPaused ||
+                                state.isInitialised
                             ? widget.config?.playIcon ??
                                 const Icon(
                                   Icons.play_arrow,
@@ -150,33 +165,36 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
                                   Icons.stop,
                                   color: Colors.white,
                                 ),
-                  );
-                },
-                valueListenable: _playerState,
+                      );
+                    },
+                    valueListenable: _playerState,
+                  ),
+                  AudioFileWaveforms(
+                    size: Size(widget.screenWidth * 0.50, 60),
+                    playerController: controller,
+                    waveformType: WaveformType.fitWidth,
+                    playerWaveStyle:
+                        widget.config?.playerWaveStyle ?? playerWaveStyle,
+                    padding: widget.config?.waveformPadding ??
+                        const EdgeInsets.only(right: 10),
+                    margin: widget.config?.waveformMargin,
+                    animationCurve:
+                        widget.config?.animationCurve ?? Curves.easeIn,
+                    animationDuration: widget.config?.animationDuration ??
+                        const Duration(milliseconds: 500),
+                    enableSeekGesture: widget.config?.enableSeekGesture ?? true,
+                  ),
+                ],
               ),
-              AudioFileWaveforms(
-                size: Size(widget.screenWidth * 0.50, 60),
-                playerController: controller,
-                waveformType: WaveformType.fitWidth,
-                playerWaveStyle:
-                    widget.config?.playerWaveStyle ?? playerWaveStyle,
-                padding: widget.config?.waveformPadding ??
-                    const EdgeInsets.only(right: 10),
-                margin: widget.config?.waveformMargin,
-                animationCurve: widget.config?.animationCurve ?? Curves.easeIn,
-                animationDuration: widget.config?.animationDuration ??
-                    const Duration(milliseconds: 500),
-                enableSeekGesture: widget.config?.enableSeekGesture ?? true,
+            ),
+            if (widget.message.reaction.reactions.isNotEmpty)
+              ReactionWidget(
+                isMessageBySender: widget.isMessageBySender,
+                reaction: widget.message.reaction,
+                messageReactionConfig: widget.messageReactionConfig,
               ),
-            ],
-          ),
+          ],
         ),
-        if (widget.message.reaction.reactions.isNotEmpty)
-          ReactionWidget(
-            isMessageBySender: widget.isMessageBySender,
-            reaction: widget.message.reaction,
-            messageReactionConfig: widget.messageReactionConfig,
-          ),
       ],
     );
   }
