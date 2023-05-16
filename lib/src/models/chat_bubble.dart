@@ -18,8 +18,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- */
-import 'package:chatview/src/models/delete_icon_configuration.dart';
+ */_configuration.dart';
 import 'package:flutter/material.dart';
 
 import '../../chatview.dart';
@@ -54,9 +53,6 @@ class ChatBubble {
   /// time only
   final Function(Message message)? onMessageRead;
 
-  ///
-  final DeleteIconConfiguration? deleteIconConfig;
-
   const ChatBubble({
     this.color,
     this.borderRadius,
@@ -67,6 +63,5 @@ class ChatBubble {
     this.senderNameTextStyle,
     this.receiptsWidgetConfig,
     this.onMessageRead,
-    this.deleteIconConfig,
   });
 }

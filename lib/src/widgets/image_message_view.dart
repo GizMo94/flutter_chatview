@@ -23,6 +23,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chatview/src/extensions/extensions.dart';
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class ImageMessageView extends StatelessWidget {
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
+    this.deleteIconConfig,
   }) : super(key: key);
 
   /// Provides message instance of chat.
@@ -59,6 +61,9 @@ class ImageMessageView extends StatelessWidget {
   /// Provides scale of highlighted image when user taps on replied image.
   final double highlightScale;
 
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
+
   String get imageUrl => message.message;
 
   Widget get iconButton => ShareIcon(
@@ -67,7 +72,7 @@ class ImageMessageView extends StatelessWidget {
       );
 
   Widget get deleteButton => DeleteIcon(
-        deleteIconConfiguration: imageMessageConfig?.deleteIconConfig,
+        deleteIconConfiguration: deleteIconConfig,
         message: message,
       );
 

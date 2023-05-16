@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import 'package:flutter/material.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
+import 'package:flutter/material.dart';
 
 class ProfileCircle extends StatelessWidget {
   const ProfileCircle({

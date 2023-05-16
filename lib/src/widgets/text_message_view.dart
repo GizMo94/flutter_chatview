@@ -20,6 +20,7 @@
  * SOFTWARE.
  */
 import 'package:chatview/src/extensions/extensions.dart';
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class TextMessageView extends StatelessWidget {
     this.messageReactionConfig,
     this.highlightMessage = false,
     this.highlightColor,
+    this.deleteIconConfig,
   }) : super(key: key);
 
   /// Represents current message is sent by current user.
@@ -65,8 +67,11 @@ class TextMessageView extends StatelessWidget {
   /// Allow user to set color of highlighted message.
   final Color? highlightColor;
 
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
+
   Widget get deleteButton => DeleteIcon(
-        deleteIconConfiguration: outgoingChatBubbleConfig?.deleteIconConfig,
+        deleteIconConfiguration: deleteIconConfig,
         message: message,
       );
 

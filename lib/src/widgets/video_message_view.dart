@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
@@ -37,6 +38,7 @@ class VideoMessageView extends StatefulWidget {
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
+    this.deleteIconConfig,
   }) : super(key: key);
 
   /// Provides message instance of chat.
@@ -57,6 +59,9 @@ class VideoMessageView extends StatefulWidget {
   /// Provides scale of highlighted image when user taps on replied image.
   final double highlightScale;
 
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
+
   @override
   State<VideoMessageView> createState() => _VideoMessageViewState();
 }
@@ -70,7 +75,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
       );
 
   Widget get deleteButton => DeleteIcon(
-        deleteIconConfiguration: widget.videoMessageConfig?.deleteIconConfig,
+        deleteIconConfiguration: widget.deleteIconConfig,
         message: widget.message,
       );
 

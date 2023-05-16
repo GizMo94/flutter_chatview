@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/chatview.dart';
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -21,6 +22,7 @@ class VoiceMessageView extends StatefulWidget {
     this.onMaxDuration,
     this.messageReactionConfig,
     this.config,
+    this.deleteIconConfig,
   }) : super(key: key);
 
   /// Provides configuration related to voice message.
@@ -45,6 +47,9 @@ class VoiceMessageView extends StatefulWidget {
   /// Provides configuration of chat bubble appearance from current user of chat.
   final ChatBubble? outgoingChatBubbleConfig;
 
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
+
   @override
   State<VoiceMessageView> createState() => _VoiceMessageViewState();
 }
@@ -63,7 +68,7 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
   PlayerWaveStyle playerWaveStyle = const PlayerWaveStyle(scaleFactor: 70);
 
   Widget get deleteButton => DeleteIcon(
-        deleteIconConfiguration: widget.config?.deleteIconConfig,
+        deleteIconConfiguration: widget.deleteIconConfig,
         message: widget.message,
       );
 

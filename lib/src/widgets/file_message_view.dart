@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
@@ -36,6 +37,7 @@ class FileMessageView extends StatelessWidget {
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
+    this.deleteIconConfig,
   }) : super(key: key);
 
   /// Provides message instance of chat.
@@ -56,6 +58,9 @@ class FileMessageView extends StatelessWidget {
   /// Provides scale of highlighted image when user taps on replied image.
   final double highlightScale;
 
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
+
   String get fileUrl => message.message;
 
   Widget get iconButton => ShareIcon(
@@ -64,7 +69,7 @@ class FileMessageView extends StatelessWidget {
       );
 
   Widget get deleteButton => DeleteIcon(
-        deleteIconConfiguration: fileMessageConfiguration?.deleteIconConfig,
+        deleteIconConfiguration: deleteIconConfig,
         message: message,
       );
 

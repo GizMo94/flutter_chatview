@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,9 @@ class MessageConfiguration {
   /// Configurations for voice message bubble
   final VoiceMessageConfiguration? voiceMessageConfig;
 
+  ///
+  final DeleteIconConfiguration? deleteIconConfig;
+
   const MessageConfiguration({
     this.imageMessageConfig,
     this.fileMessageConfiguration,
@@ -52,5 +56,6 @@ class MessageConfiguration {
     this.emojiMessageConfig,
     this.customMessageBuilder,
     this.voiceMessageConfig,
+    this.deleteIconConfig,
   });
 }

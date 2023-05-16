@@ -1,5 +1,4 @@
-import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:chatview/src/models/delete_icon_configuration.dart';
+import 'package:audio_waveforms/audio_waveformsn.dart';
 import 'package:flutter/material.dart';
 
 /// A configuration model class for voice message bubble.
@@ -16,7 +15,6 @@ class VoiceMessageConfiguration {
     this.waveformMargin,
     this.waveformPadding,
     this.enableSeekGesture = true,
-    this.deleteIconConfig,
   });
 
   /// Applies style to waveform.
@@ -51,7 +49,4 @@ class VoiceMessageConfiguration {
 
   /// Enable/disable seeking with gestures. Enabled by default.
   final bool enableSeekGesture;
-
-  ///
-  final DeleteIconConfiguration? deleteIconConfig;
 }

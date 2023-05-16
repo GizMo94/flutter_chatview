@@ -209,6 +209,7 @@ class _MessageViewState extends State<MessageView>
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
+                    deleteIconConfig: widget.messageConfig?.deleteIconConfig,
                   );
                 } else if (widget.message.messageType.isText ||
                     widget.message.messageType.isGeoloc) {
@@ -221,6 +222,7 @@ class _MessageViewState extends State<MessageView>
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightColor: widget.highlightColor,
                     highlightMessage: widget.shouldHighlight,
+                    deleteIconConfig: widget.messageConfig?.deleteIconConfig,
                   );
                 } else if (widget.message.messageType.isVoice) {
                   return VoiceMessageView(
@@ -232,6 +234,7 @@ class _MessageViewState extends State<MessageView>
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     inComingChatBubbleConfig: widget.inComingChatBubbleConfig,
                     outgoingChatBubbleConfig: widget.outgoingChatBubbleConfig,
+                    deleteIconConfig: widget.messageConfig?.deleteIconConfig,
                   );
                 } else if (widget.message.messageType.isVideo) {
                   return VideoMessageView(
@@ -242,6 +245,7 @@ class _MessageViewState extends State<MessageView>
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
+                    deleteIconConfig: widget.messageConfig?.deleteIconConfig,
                   );
                 } else if (widget.message.messageType.isFile) {
                   return FileMessageView(
@@ -252,6 +256,7 @@ class _MessageViewState extends State<MessageView>
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
+                    deleteIconConfig: widget.messageConfig?.deleteIconConfig,
                   );
                 } else if (widget.message.messageType.isCustom &&
                     messageConfig?.customMessageBuilder != null) {

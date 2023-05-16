@@ -20,9 +20,9 @@
  * SOFTWARE.
  */
 import 'dart:math';
-import 'package:flutter/material.dart';
 
 import 'package:chatview/src/widgets/profile_circle.dart';
+import 'package:flutter/material.dart';
 
 import '../../chatview.dart';
 import '../utils/constants/constants.dart';

@@ -20,8 +20,8 @@
  * SOFTWARE.
  */
 import 'dart:io' if (kIsWeb) 'dart:html';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../values/typedefs.dart';
