@@ -1,4 +1,4 @@
-import 'package:audio_waveforms/audio_waveformsn.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 
 /// A configuration model class for voice message bubble.
