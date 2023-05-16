@@ -20,10 +20,11 @@
  * SOFTWARE.
  */
 import 'dart:async';
-import 'dart:io' show Platform;
+import 'dart:io' show File, Platform;
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,6 +43,7 @@ class ChatUITextField extends StatefulWidget {
     required this.onRecordingComplete,
     required this.onImageSelected,
     required this.onVideoSelected,
+    required this.onFileSelected,
   }) : super(key: key);
 
   /// Provides configuration of default text field in chat.
@@ -64,6 +66,9 @@ class ChatUITextField extends StatefulWidget {
 
   /// Provides callback when user select videos from camera/gallery.
   final StringsCallBack onVideoSelected;
+
+  ///
+  final StringsCallBack onFileSelected;
 
   @override
   State<ChatUITextField> createState() => _ChatUITextFieldState();
@@ -309,6 +314,13 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
               ),
           title: const Text('Galerie vidéo'), // <-- Text
         ),
+        ListTile(
+          onTap: () => _onFileIconPressed(),
+          leading: const Icon(
+            Icons.attach_file,
+          ),
+          title: const Text('Ajouter un fichier'), // <-- Text
+        ),
       ],
     );
   }
@@ -342,6 +354,20 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
     try {
       final XFile? image = await _imagePicker.pickVideo(source: imageSource);
       widget.onVideoSelected(image?.path ?? '', '');
+    } catch (e) {
+      widget.onVideoSelected('', e.toString());
+    }
+  }
+
+  void _onFileIconPressed() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        widget.onVideoSelected(result.files.single.path ?? '', '');
+      } else {
+        // User canceled the picker
+      }
     } catch (e) {
       widget.onVideoSelected('', e.toString());
     }
