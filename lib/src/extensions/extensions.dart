@@ -97,6 +97,10 @@ extension MessageTypes on MessageType {
 
   bool get isVideo => this == MessageType.video;
 
+  bool get isFile => this == MessageType.file;
+
+  bool get isGeoloc => this == MessageType.geoloc;
+
   bool get isCustom => this == MessageType.custom;
 }
 

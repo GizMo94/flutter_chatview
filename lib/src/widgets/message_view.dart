@@ -209,7 +209,8 @@ class _MessageViewState extends State<MessageView>
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
                   );
-                } else if (widget.message.messageType.isText) {
+                } else if (widget.message.messageType.isText ||
+                    widget.message.messageType.isGeoloc) {
                   return TextMessageView(
                     inComingChatBubbleConfig: widget.inComingChatBubbleConfig,
                     outgoingChatBubbleConfig: widget.outgoingChatBubbleConfig,
@@ -237,6 +238,15 @@ class _MessageViewState extends State<MessageView>
                     isMessageBySender: widget.isMessageBySender,
                     videoMessageConfig:
                         messageConfig?.videoMessageConfiguration,
+                    messageReactionConfig: messageConfig?.messageReactionConfig,
+                    highlightImage: widget.shouldHighlight,
+                    highlightScale: widget.highlightScale,
+                  );
+                } else if (widget.message.messageType.isFile) {
+                  return ImageMessageView(
+                    message: widget.message,
+                    isMessageBySender: widget.isMessageBySender,
+                    imageMessageConfig: messageConfig?.imageMessageConfig,
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
