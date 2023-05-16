@@ -25,8 +25,8 @@ import 'package:flutter/material.dart';
 
 import 'reaction_widget.dart';
 
-class ImageMessageView extends StatelessWidget {
-  const ImageMessageView({
+class FileMessageView extends StatelessWidget {
+  const FileMessageView({
     Key? key,
     required this.message,
     required this.isMessageBySender,

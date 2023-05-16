@@ -22,6 +22,7 @@
 import 'package:chatview/chatview.dart';
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
+import 'package:chatview/src/widgets/file_message_view.dart';
 import 'package:chatview/src/widgets/video_message_view.dart';
 import 'package:flutter/material.dart';
 
@@ -243,10 +244,11 @@ class _MessageViewState extends State<MessageView>
                     highlightScale: widget.highlightScale,
                   );
                 } else if (widget.message.messageType.isFile) {
-                  return ImageMessageView(
+                  return FileMessageView(
                     message: widget.message,
                     isMessageBySender: widget.isMessageBySender,
-                    imageMessageConfig: messageConfig?.imageMessageConfig,
+                    fileMessageConfiguration:
+                        messageConfig?.fileMessageConfiguration,
                     messageReactionConfig: messageConfig?.messageReactionConfig,
                     highlightImage: widget.shouldHighlight,
                     highlightScale: widget.highlightScale,
