@@ -25,6 +25,7 @@ export 'chat_user.dart';
 export 'chat_view_states_configuration.dart';
 export 'emoji_message_configuration.dart';
 export 'feature_active_config.dart';
+export 'file_message_configuration.dart';
 export 'image_message.dart';
 export 'link_preview_configuration.dart';
 export 'message.dart';
