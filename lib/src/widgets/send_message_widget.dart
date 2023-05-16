@@ -27,6 +27,7 @@ import 'package:chatview/chatview.dart';
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/utils/package_strings.dart';
 import 'package:chatview/src/widgets/chatui_textfield.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
@@ -49,8 +50,7 @@ class SendMessageWidget extends StatefulWidget {
   final StringMessageCallBack onSendTap;
 
   final void Function(
-    String name,
-    int size,
+    FilePickerResult file,
     ReplyMessage replyMessage,
     MessageType messageType,
   ) onSendFileTap;
@@ -359,13 +359,11 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     }
   }
 
-  void _onFileSelected(String name, int size) {
+  void _onFileSelected(FilePickerResult file) {
     debugPrint('Call in Send Message Widget');
-    if (name.isNotEmpty) {
-      Navigator.pop(context);
-      widget.onSendFileTap.call(name, size, replyMessage, MessageType.file);
-      _assignRepliedMessage();
-    }
+    Navigator.pop(context);
+    widget.onSendFileTap.call(file, replyMessage, MessageType.file);
+    _assignRepliedMessage();
   }
 
   void _assignRepliedMessage() {

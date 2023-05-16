@@ -23,6 +23,7 @@ import 'package:chatview/chatview.dart';
 import 'package:chatview/src/widgets/chat_list_widget.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:chatview/src/widgets/chatview_state_widget.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart';
 
@@ -105,8 +106,7 @@ class ChatView extends StatefulWidget {
 
   ///
   final void Function(
-    String name,
-    int size,
+    FilePickerResult file,
     ReplyMessage replyMessage,
     MessageType messageType,
   )? onSendFileTap;
@@ -304,8 +304,7 @@ class _ChatViewState extends State<ChatView>
   }
 
   void _onSendFileTap(
-    String name,
-    int size,
+    FilePickerResult file,
     ReplyMessage replyMessage,
     MessageType messageType,
   ) {
@@ -314,7 +313,7 @@ class _ChatViewState extends State<ChatView>
         if (!messageType.isText) {
           FocusScope.of(context).unfocus();
         }
-        widget.onSendFileTap!(name, size, replyMessage, messageType);
+        widget.onSendFileTap!(file, replyMessage, messageType);
       }
       _assignReplyMessage();
     }

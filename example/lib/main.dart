@@ -78,7 +78,6 @@ class _ChatScreenState extends State<ChatScreen> {
         currentUser: currentUser,
         chatController: _chatController,
         onSendTap: _onSendTap,
-        onSendFileTap: _onSendFileTap,
         featureActiveConfig: const FeatureActiveConfig(
             lastSeenAgoBuilderVisibility: true,
             receiptsBuilderVisibility: true),
@@ -281,34 +280,6 @@ class _ChatScreenState extends State<ChatScreen> {
         id: id.toString(),
         createdAt: DateTime.now(),
         message: message,
-        sendBy: currentUser.id,
-        replyMessage: replyMessage,
-        messageType: messageType,
-      ),
-    );
-    Future.delayed(const Duration(milliseconds: 300), () {
-      _chatController.initialMessageList.last.setStatus =
-          MessageStatus.undelivered;
-    });
-    Future.delayed(const Duration(seconds: 1), () {
-      _chatController.initialMessageList.last.setStatus = MessageStatus.read;
-    });
-  }
-
-  void _onSendFileTap(
-    String name,
-    int size,
-    ReplyMessage replyMessage,
-    MessageType messageType,
-  ) {
-    final id = int.parse(Data.messageList.last.id) + 1;
-    _chatController.addMessage(
-      Message(
-        id: id.toString(),
-        createdAt: DateTime.now(),
-        message: 'message',
-        name: name,
-        size: size.toDouble(),
         sendBy: currentUser.id,
         replyMessage: replyMessage,
         messageType: messageType,
