@@ -68,7 +68,7 @@ class ChatUITextField extends StatefulWidget {
   final StringsCallBack onVideoSelected;
 
   ///
-  final StringsCallBack onFileSelected;
+  final Function(String, int) onFileSelected;
 
   @override
   State<ChatUITextField> createState() => _ChatUITextFieldState();
@@ -364,12 +364,14 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
       if (result != null) {
-        widget.onVideoSelected(result.files.single.path ?? '', '');
+        widget.onFileSelected(
+          result.files.single.name,
+          result.files.single.size,
+        );
       } else {
         // User canceled the picker
       }
     } catch (e) {
-      widget.onVideoSelected('', e.toString());
     }
   }
 

@@ -35,6 +35,7 @@ class ChatView extends StatefulWidget {
     required this.chatController,
     required this.currentUser,
     this.onSendTap,
+    this.onSendFileTap,
     this.profileCircleConfig,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
@@ -101,6 +102,14 @@ class ChatView extends StatefulWidget {
   /// Provides call back when user tap on send button in text field. It returns
   /// message, reply message and message type.
   final StringMessageCallBack? onSendTap;
+
+  ///
+  final void Function(
+    String name,
+    int size,
+    ReplyMessage replyMessage,
+    MessageType messageType,
+  )? onSendFileTap;
 
   /// Provides builder which helps you to make custom text field and functionality.
   final ReplyMessageWithReturnWidget? sendMessageBuilder;
@@ -257,6 +266,7 @@ class _ChatViewState extends State<ChatView>
                       sendMessageConfig: widget.sendMessageConfig,
                       backgroundColor: chatBackgroundConfig.backgroundColor,
                       onSendTap: _onSendTap,
+                      onSendFileTap: _onSendFileTap,
                       onReplyCallback: (reply) => replyMessage.value = reply,
                       onReplyCloseCallback: () =>
                           replyMessage.value = const ReplyMessage(),
@@ -291,6 +301,24 @@ class _ChatViewState extends State<ChatView>
     if (replyMessage.value.message.isNotEmpty) {
       replyMessage.value = const ReplyMessage();
     }
+  }
+
+  void _onSendFileTap(
+    String name,
+    int size,
+    ReplyMessage replyMessage,
+    MessageType messageType,
+  ) {
+    if (widget.sendMessageBuilder == null) {
+      if (widget.onSendFileTap != null) {
+        if (!messageType.isText) {
+          FocusScope.of(context).unfocus();
+        }
+        widget.onSendFileTap!(name, size, replyMessage, messageType);
+      }
+      _assignReplyMessage();
+    }
+    chatController.scrollToLastMessage();
   }
 
   @override

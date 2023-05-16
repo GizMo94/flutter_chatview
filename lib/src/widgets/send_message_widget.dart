@@ -36,6 +36,7 @@ class SendMessageWidget extends StatefulWidget {
   const SendMessageWidget({
     Key? key,
     required this.onSendTap,
+    required this.onSendFileTap,
     required this.chatController,
     this.sendMessageConfig,
     this.backgroundColor,
@@ -46,6 +47,13 @@ class SendMessageWidget extends StatefulWidget {
 
   /// Provides call back when user tap on send button on text field.
   final StringMessageCallBack onSendTap;
+
+  final void Function(
+    String name,
+    int size,
+    ReplyMessage replyMessage,
+    MessageType messageType,
+  ) onSendFileTap;
 
   /// Provides configuration for text field appearance.
   final SendMessageConfiguration? sendMessageConfig;
@@ -351,11 +359,11 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     }
   }
 
-  void _onFileSelected(String filePath, String error) {
+  void _onFileSelected(String name, int size) {
     debugPrint('Call in Send Message Widget');
-    if (filePath.isNotEmpty) {
+    if (name.isNotEmpty) {
       Navigator.pop(context);
-      widget.onSendTap.call(filePath, replyMessage, MessageType.file);
+      widget.onSendFileTap.call(name, size, replyMessage, MessageType.file);
       _assignRepliedMessage();
     }
   }
