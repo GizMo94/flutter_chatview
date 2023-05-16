@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:chatview/chatview.dart';
-import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -130,7 +129,6 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        if (widget.isMessageBySender) deleteButton,
         Stack(
           clipBehavior: Clip.none,
           children: [

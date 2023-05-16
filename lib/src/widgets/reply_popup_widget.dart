@@ -87,13 +87,13 @@ class ReplyPopupWidget extends StatelessWidget {
                 style: textStyle,
               ),
             ),
-          InkWell(
+          /*InkWell(
             onTap: onMoreTap,
             child: Text(
               PackageStrings.more,
               style: textStyle,
             ),
-          ),
+          ),*/
         ],
       ),
     );

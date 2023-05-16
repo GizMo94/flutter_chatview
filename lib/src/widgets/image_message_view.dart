@@ -23,7 +23,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chatview/src/extensions/extensions.dart';
-import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +82,6 @@ class ImageMessageView extends StatelessWidget {
       mainAxisAlignment:
           isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        if (isMessageBySender) deleteButton,
         Stack(
           children: [
             GestureDetector(

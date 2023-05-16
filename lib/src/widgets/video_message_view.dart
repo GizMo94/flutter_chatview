@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import 'package:chatview/src/models/delete_icon_configuration.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
@@ -106,7 +105,6 @@ class _VideoMessageViewState extends State<VideoMessageView> {
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        if (widget.isMessageBySender) deleteButton,
         Stack(
           children: [
             GestureDetector(
