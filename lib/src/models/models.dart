@@ -23,6 +23,7 @@ export 'chat_bubble.dart';
 export 'chat_bubble_configuration.dart';
 export 'chat_user.dart';
 export 'chat_view_states_configuration.dart';
+export 'delete_icon_configuration.dart';
 export 'emoji_message_configuration.dart';
 export 'feature_active_config.dart';
 export 'file_message_configuration.dart';
