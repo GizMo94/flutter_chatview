@@ -113,61 +113,81 @@ class ReplyMessageWidget extends StatelessWidget {
                                         BorderRadius.circular(14),
                               ),
                             )
-                          : message.replyMessage.messageType.isVideo
-                              ? VideoSnapshot(
-                                  repliedMessageConfig: repliedMessageConfig,
-                                  replyMessage: replyMessage)
-                              : Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        repliedMessageConfig?.maxWidth ?? 280,
-                                  ),
-                                  padding: repliedMessageConfig?.padding ??
-                                      const EdgeInsets.symmetric(
-                                        vertical: 8,
-                                        horizontal: 12,
-                                      ),
+                          : message.replyMessage.messageType.isFile
+                              ? Container(
+                                  height: 55,
+                                  width: 55,
                                   decoration: BoxDecoration(
-                                    borderRadius: _borderRadius(
-                                      replyMessage: replyMessage,
-                                      replyBySender: replyBySender,
-                                    ),
-                                    color:
-                                        repliedMessageConfig?.backgroundColor ??
-                                            Colors.grey.shade500,
+                                    color: Colors.grey.shade500,
+                                    borderRadius: BorderRadius.circular(
+                                        replyBorderRadius2),
                                   ),
-                                  child: message
-                                          .replyMessage.messageType.isVoice
-                                      ? Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.mic,
-                                              color: repliedMessageConfig
-                                                      ?.micIconColor ??
-                                                  Colors.white,
-                                            ),
-                                            const SizedBox(width: 2),
-                                            if (message.replyMessage
-                                                    .voiceMessageDuration !=
-                                                null)
-                                              Text(
-                                                message.replyMessage
-                                                    .voiceMessageDuration!
-                                                    .toHHMMSS(),
-                                                style: repliedMessageConfig
-                                                    ?.textStyle,
-                                              ),
-                                          ],
-                                        )
-                                      : Text(
-                                          replyMessage,
-                                          style: repliedMessageConfig
-                                                  ?.textStyle ??
-                                              textTheme.bodyMedium!.copyWith(
-                                                  color: Colors.black),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: const Icon(
+                                      Icons.file_copy_outlined,
+                                      size: 24,
+                                    ),
+                                  ),
+                                )
+                              : message.replyMessage.messageType.isVideo
+                                  ? VideoSnapshot(
+                                      repliedMessageConfig:
+                                          repliedMessageConfig,
+                                      replyMessage: replyMessage)
+                                  : Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth:
+                                            repliedMessageConfig?.maxWidth ??
+                                                280,
+                                      ),
+                                      padding: repliedMessageConfig?.padding ??
+                                          const EdgeInsets.symmetric(
+                                            vertical: 8,
+                                            horizontal: 12,
+                                          ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: _borderRadius(
+                                          replyMessage: replyMessage,
+                                          replyBySender: replyBySender,
                                         ),
-                                ),
+                                        color: repliedMessageConfig
+                                                ?.backgroundColor ??
+                                            Colors.grey.shade500,
+                                      ),
+                                      child: message
+                                              .replyMessage.messageType.isVoice
+                                          ? Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(
+                                                  Icons.mic,
+                                                  color: repliedMessageConfig
+                                                          ?.micIconColor ??
+                                                      Colors.white,
+                                                ),
+                                                const SizedBox(width: 2),
+                                                if (message.replyMessage
+                                                        .voiceMessageDuration !=
+                                                    null)
+                                                  Text(
+                                                    message.replyMessage
+                                                        .voiceMessageDuration!
+                                                        .toHHMMSS(),
+                                                    style: repliedMessageConfig
+                                                        ?.textStyle,
+                                                  ),
+                                              ],
+                                            )
+                                          : Text(
+                                              replyMessage,
+                                              style: repliedMessageConfig
+                                                      ?.textStyle ??
+                                                  textTheme.bodyMedium!
+                                                      .copyWith(
+                                                          color: Colors.black),
+                                            ),
+                                    ),
                     ),
                   ),
                   if (replyBySender)

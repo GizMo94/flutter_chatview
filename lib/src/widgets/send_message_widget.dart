@@ -205,6 +205,8 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                         _imageReplyMessageView
                                       else if (state.messageType.isVideo)
                                         _videoReplyMessageView
+                                      else if (state.messageType.isFile)
+                                        _fileReplyMessageView
                                       else
                                         Text(
                                           state.message,
@@ -297,6 +299,25 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
         ),
         Text(
           PackageStrings.video,
+          style: TextStyle(
+            color: widget.sendMessageConfig?.replyMessageColor ?? Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget get _fileReplyMessageView {
+    return Row(
+      children: [
+        Icon(
+          Icons.attach_file,
+          size: 20,
+          color: widget.sendMessageConfig?.replyMessageColor ??
+              Colors.grey.shade700,
+        ),
+        Text(
+          'Fichier',
           style: TextStyle(
             color: widget.sendMessageConfig?.replyMessageColor ?? Colors.black,
           ),
