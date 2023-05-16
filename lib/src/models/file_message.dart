@@ -19,39 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import 'package:chatview/src/models/file_message.dart';
-import 'package:chatview/src/models/models.dart';
+import 'package:chatview/src/models/share_icon_configuration.dart';
 import 'package:flutter/material.dart';
 
-class MessageConfiguration {
-  /// Provides configuration of image message appearance.
-  final ImageMessageConfiguration? imageMessageConfig;
+import '../values/typedefs.dart';
 
-  ///
-  final FileMessageConfiguration? fileMessageConfiguration;
+class FileMessageConfiguration {
+  /// Provides configuration of share button while image message is appeared.
+  final ShareIconConfiguration? shareIconConfig;
 
-  /// Provides configuration of video message appearance.
-  final VideoMessageConfiguration? videoMessageConfiguration;
+  /// Provides callback when user taps on image message.
+  final StringCallback? onTap;
 
-  /// Provides configuration of image message appearance.
-  final MessageReactionConfiguration? messageReactionConfig;
+  /// Used for giving height of image message.
+  final double? height;
 
-  /// Provides configuration of emoji messages appearance.
-  final EmojiMessageConfiguration? emojiMessageConfig;
+  /// Used for giving width of image message.
+  final double? width;
 
-  /// Provides builder to create view for custom messages.
-  final Widget Function(Message)? customMessageBuilder;
+  /// Used for giving padding of image message.
+  final EdgeInsetsGeometry? padding;
 
-  /// Configurations for voice message bubble
-  final VoiceMessageConfiguration? voiceMessageConfig;
+  /// Used for giving margin of image message.
+  final EdgeInsetsGeometry? margin;
 
-  const MessageConfiguration({
-    this.imageMessageConfig,
-    this.fileMessageConfiguration,
-    this.videoMessageConfiguration,
-    this.messageReactionConfig,
-    this.emojiMessageConfig,
-    this.customMessageBuilder,
-    this.voiceMessageConfig,
+  /// Used for giving border radius of image message.
+  final BorderRadius? borderRadius;
+
+  const FileMessageConfiguration({
+    this.shareIconConfig,
+    this.onTap,
+    this.height,
+    this.width,
+    this.padding,
+    this.margin,
+    this.borderRadius,
   });
 }

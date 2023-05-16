@@ -19,18 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import 'package:chatview/src/models/file_message.dart';
 import 'package:chatview/src/models/models.dart';
 import 'package:flutter/material.dart';
 
 import 'reaction_widget.dart';
-import 'share_icon.dart';
 
 class ImageMessageView extends StatelessWidget {
   const ImageMessageView({
     Key? key,
     required this.message,
     required this.isMessageBySender,
-    this.imageMessageConfig,
+    this.fileMessageConfiguration,
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
@@ -43,7 +43,7 @@ class ImageMessageView extends StatelessWidget {
   final bool isMessageBySender;
 
   /// Provides configuration for image message appearance.
-  final ImageMessageConfiguration? imageMessageConfig;
+  final FileMessageConfiguration? fileMessageConfiguration;
 
   /// Provides configuration of reaction appearance in chat bubble.
   final MessageReactionConfiguration? messageReactionConfig;
@@ -54,12 +54,7 @@ class ImageMessageView extends StatelessWidget {
   /// Provides scale of highlighted image when user taps on replied image.
   final double highlightScale;
 
-  String get imageUrl => message.message;
-
-  Widget get iconButton => ShareIcon(
-        shareIconConfig: imageMessageConfig?.shareIconConfig,
-        imageUrl: imageUrl,
-      );
+  String get fileUrl => message.message;
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +67,8 @@ class ImageMessageView extends StatelessWidget {
         Stack(
           children: [
             GestureDetector(
-              onTap: () => imageMessageConfig?.onTap != null
-                  ? imageMessageConfig?.onTap!(imageUrl)
+              onTap: () => fileMessageConfiguration?.onTap != null
+                  ? fileMessageConfiguration?.onTap!(fileUrl)
                   : null,
               child: Transform.scale(
                 scale: highlightImage ? highlightScale : 1.0,
@@ -81,18 +76,18 @@ class ImageMessageView extends StatelessWidget {
                     ? Alignment.centerRight
                     : Alignment.centerLeft,
                 child: Container(
-                  padding: imageMessageConfig?.padding ?? EdgeInsets.zero,
-                  margin: imageMessageConfig?.margin ??
+                  padding: fileMessageConfiguration?.padding ?? EdgeInsets.zero,
+                  margin: fileMessageConfiguration?.margin ??
                       EdgeInsets.only(
                         top: 6,
                         right: isMessageBySender ? 6 : 0,
                         left: isMessageBySender ? 0 : 6,
                         bottom: message.reaction.reactions.isNotEmpty ? 15 : 0,
                       ),
-                  height: imageMessageConfig?.height ?? 200,
-                  width: imageMessageConfig?.width ?? 150,
+                  height: fileMessageConfiguration?.height ?? 200,
+                  width: fileMessageConfiguration?.width ?? 150,
                   child: ClipRRect(
-                    borderRadius: imageMessageConfig?.borderRadius ??
+                    borderRadius: fileMessageConfiguration?.borderRadius ??
                         BorderRadius.circular(14),
                     child: const Icon(Icons.file_copy_outlined),
                   ),
