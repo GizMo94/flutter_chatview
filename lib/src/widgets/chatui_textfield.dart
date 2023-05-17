@@ -375,7 +375,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
         'zip',
         'rar',
         'gz',
-      ]);
+      ], type: FileType.custom);
 
       if (result != null) {
         widget.onFileSelected(result);
