@@ -361,7 +361,21 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
 
   void _onFileIconPressed() async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(allowedExtensions: [
+        'pdf',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'ppt',
+        'pptx',
+        'txt',
+        'csv',
+        'zip',
+        'rar',
+        'gz',
+      ]);
 
       if (result != null) {
         widget.onFileSelected(result);
