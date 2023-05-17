@@ -22,6 +22,7 @@
 import 'package:chatview/chatview.dart';
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
+import 'package:chatview/src/widgets/empty_message_view.dart';
 import 'package:chatview/src/widgets/file_message_view.dart';
 import 'package:chatview/src/widgets/video_message_view.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +168,19 @@ class _MessageViewState extends State<MessageView>
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           (() {
-                if (message.isAllEmoji) {
+                if (widget.message.status == MessageStatus.archive) {
+                  return EmptyMessageView(
+                    inComingChatBubbleConfig: widget.inComingChatBubbleConfig,
+                    outgoingChatBubbleConfig: widget.outgoingChatBubbleConfig,
+                    isMessageBySender: widget.isMessageBySender,
+                    message: widget.message,
+                    chatBubbleMaxWidth: widget.chatBubbleMaxWidth,
+                    messageReactionConfig: messageConfig?.messageReactionConfig,
+                    highlightColor: widget.highlightColor,
+                    highlightMessage: widget.shouldHighlight,
+                    deleteIconConfig: widget.messageConfig?.deleteIconConfig,
+                  );
+                } else if (message.isAllEmoji) {
                   return Stack(
                     clipBehavior: Clip.none,
                     children: [

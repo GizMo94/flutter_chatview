@@ -114,7 +114,7 @@ class Data {
       createdAt: DateTime.now(),
       sendBy: '1',
       messageType: MessageType.file,
-      status: MessageStatus.read,
+      status: MessageStatus.archive,
     ),
   ];
 }
