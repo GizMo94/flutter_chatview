@@ -62,6 +62,9 @@ class FileMessageView extends StatelessWidget {
 
   String get fileUrl => message.message;
 
+  ///
+  String? get name => message.name;
+
   Widget get iconButton => ShareIcon(
         shareIconConfig: fileMessageConfiguration?.shareIconConfig,
         imageUrl: fileUrl,
@@ -88,7 +91,7 @@ class FileMessageView extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () => fileMessageConfiguration?.onTap != null
-                      ? fileMessageConfiguration?.onTap!(fileUrl)
+                      ? fileMessageConfiguration?.onTap!(fileUrl, name ?? '')
                       : null,
                   child: Transform.scale(
                     scale: highlightImage ? highlightScale : 1.0,
