@@ -7,7 +7,7 @@ class Data {
     Message(
       id: '1',
       message: "Hi!",
-      createdAt: DateTime.now(),
+      createdAt: DateTime(2022,20,05),
       sendBy: '1', // userId of who sends the message
       status: MessageStatus.read,
     ),
@@ -88,14 +88,11 @@ class Data {
     ),
     Message(
       id: '10',
-      message: "Thank you!!",
+      message: "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
       status: MessageStatus.read,
       createdAt: DateTime.now(),
       sendBy: '1',
-      reaction: Reaction(
-        reactions: ['\u{2764}', '\u{2764}', '\u{2764}', '\u{2764}'],
-        reactedUserIds: ['2', '4', '3', '1'],
-      ),
+      messageType: MessageType.video
     ),
     Message(
       id: '11',

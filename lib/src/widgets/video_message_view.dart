@@ -23,6 +23,7 @@ import 'package:chatview/src/models/models.dart';
 import 'package:chatview/src/widgets/delete_icon.dart';
 import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:chatview/src/widgets/share_icon.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -78,22 +79,29 @@ class _VideoMessageViewState extends State<VideoMessageView> {
         message: widget.message,
       );
 
-  late VideoPlayerController _controller;
+  late VideoPlayerController _videoPlayerController;
+  late ChewieController _chewieController;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(videoUrl);
+    _videoPlayerController = VideoPlayerController.network(videoUrl);
 
-    _controller.addListener(() {
+    _videoPlayerController.addListener(() {
       setState(() {});
     });
-    _controller.initialize().then((_) => setState(() {}));
+    _videoPlayerController.initialize().then((_) => setState(() {}));
+
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      showOptions: false,
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
@@ -109,7 +117,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
           children: [
             GestureDetector(
               onTap: () => (widget.videoMessageConfig?.onTap != null &&
-                      _controller.value.isPlaying)
+                      _videoPlayerController.value.isPlaying)
                   ? widget.videoMessageConfig?.onTap!(videoUrl)
                   : null,
               child: Transform.scale(
@@ -129,19 +137,13 @@ class _VideoMessageViewState extends State<VideoMessageView> {
                             ? 15
                             : 0,
                       ),
-                  height: widget.videoMessageConfig?.height ?? 200,
-                  width: widget.videoMessageConfig?.width ?? 150,
+                  height: widget.videoMessageConfig?.height ?? 250,
+                  width: widget.videoMessageConfig?.width ?? 200,
                   child: ClipRRect(
                     borderRadius: widget.videoMessageConfig?.borderRadius ??
                         BorderRadius.circular(14),
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: <Widget>[
-                        VideoPlayer(_controller),
-                        ControlsOverlay(controller: _controller),
-                        VideoProgressIndicator(_controller,
-                            allowScrubbing: true),
-                      ],
+                    child: Chewie(
+                      controller: _chewieController,
                     ),
                   ),
                 ),

@@ -32,7 +32,7 @@ import '../utils/package_strings.dart';
 extension TimeDifference on DateTime {
   String get getDay {
     final DateTime formattedDate = DateFormat(dateFormat).parse(toString());
-    final DateFormat formatter = DateFormat.yMMMMd(enUS);
+    final DateFormat formatter = DateFormat.yMMMMd(frFR);
     final differenceInDays = formattedDate.difference(DateTime.now()).inDays;
     if (differenceInDays == 0) {
       return PackageStrings.today;
@@ -118,7 +118,7 @@ extension ChatViewStateTitleExtension on String? {
       case ChatViewState.hasMessages:
         return this ?? '';
       case ChatViewState.noData:
-        return this ?? 'Pas de message';
+        return this ?? 'Aucun message';
       case ChatViewState.loading:
       case ChatViewState.sending:
         return this ?? '';
