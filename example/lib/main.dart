@@ -274,7 +274,7 @@ class _ChatScreenState extends State<ChatScreen> {
         swipeToReplyConfig: SwipeToReplyConfiguration(
           replyIconColor: theme.swipeToReplyIconColor,
         ),
-        onChatBubbleLongPress: (message) => [PullDownMenuItem(
+        onChatBubbleLongPress: (reply, message) => [PullDownMenuItem(
           onTap: () {},
           title: 'Pin',
           icon: CupertinoIcons.pin,
@@ -282,7 +282,7 @@ class _ChatScreenState extends State<ChatScreen> {
           PullDownMenuItem(
             title: 'Forward',
             subtitle: 'Share in different channel',
-            onTap: () {},
+            onTap: () => reply.call(message),
             icon: CupertinoIcons.arrowshape_turn_up_right,
           ),
           PullDownMenuItem(

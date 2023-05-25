@@ -107,7 +107,7 @@ class ChatListWidget extends StatefulWidget {
   final MessageCallBack assignReplyMessage;
 
   ///
-  final List<PullDownMenuEntry> Function(Message)? onChatBubbleLongPress;
+  final List<PullDownMenuEntry> Function(MessageCallBack, Message)? onChatBubbleLongPress;
 
   @override
   State<ChatListWidget> createState() => _ChatListWidgetState();

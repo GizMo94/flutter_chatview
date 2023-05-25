@@ -146,7 +146,7 @@ class ChatView extends StatefulWidget {
   final Widget? appBar;
 
   ///
-  final List<PullDownMenuEntry> Function(Message)? onChatBubbleLongPress;
+  final List<PullDownMenuEntry> Function(MessageCallBack, Message)? onChatBubbleLongPress;
 
   @override
   State<ChatView> createState() => _ChatViewState();

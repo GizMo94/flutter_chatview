@@ -88,7 +88,7 @@ class ChatGroupedListWidget extends StatefulWidget {
   final VoidCallBack onChatListTap;
 
   /// Provides callback when user press chat bubble for certain time then usual.
-  final List<PullDownMenuEntry> Function(Message)? onChatBubbleLongPress;
+  final List<PullDownMenuEntry> Function(MessageCallBack,Message)? onChatBubbleLongPress;
 
   /// Provide flag for turn on/off to see message crated time view when user
   /// swipe whole chat.
@@ -304,7 +304,7 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                     valueListenable: _replyId,
                     builder: (context, state, child) {
                       return PullDownButton(
-                        itemBuilder: (context) => widget.onChatBubbleLongPress?.call(message) ?? [],
+                        itemBuilder: (context) => widget.onChatBubbleLongPress?.call(widget.assignReplyMessage, message) ?? [],
                         buttonBuilder: (context, showMenu) => ChatBubbleWidget(
                           key: message.key,
                           messageTimeTextStyle:
