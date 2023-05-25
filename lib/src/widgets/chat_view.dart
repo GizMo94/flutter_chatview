@@ -25,6 +25,7 @@ import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:chatview/src/widgets/chatview_state_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'package:timeago/timeago.dart';
 
 import '../values/custom_time_messages.dart';
@@ -56,6 +57,7 @@ class ChatView extends StatefulWidget {
     required this.chatViewState,
     ChatViewStateConfiguration? chatViewStateConfig,
     this.featureActiveConfig = const FeatureActiveConfig(),
+    this.onChatBubbleLongPress,
   })  : chatBackgroundConfig =
             chatBackgroundConfig ?? const ChatBackgroundConfiguration(),
         chatViewStateConfig =
@@ -142,6 +144,9 @@ class ChatView extends StatefulWidget {
 
   /// Provides parameter so user can assign ChatViewAppbar.
   final Widget? appBar;
+
+  ///
+  final List<PullDownMenuEntry>? onChatBubbleLongPress;
 
   @override
   State<ChatView> createState() => _ChatViewState();
@@ -255,6 +260,7 @@ class _ChatViewState extends State<ChatView>
                           assignReplyMessage: (message) => _sendMessageKey
                               .currentState
                               ?.assignReplyMessage(message),
+                          onChatBubbleLongPress: widget.onChatBubbleLongPress,
                         );
                       },
                     ),

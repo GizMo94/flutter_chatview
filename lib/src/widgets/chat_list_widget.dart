@@ -26,6 +26,7 @@ import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/widgets/chat_groupedlist_widget.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../chatview.dart';
 import 'reaction_popup.dart';
@@ -50,6 +51,7 @@ class ChatListWidget extends StatefulWidget {
     this.replyPopupConfig,
     this.loadMoreData,
     this.isLastPage,
+    this.onChatBubbleLongPress,
   }) : super(key: key);
 
   /// Provides controller for accessing few function for running chat.
@@ -103,6 +105,9 @@ class ChatListWidget extends StatefulWidget {
   /// Provides callback for assigning reply message when user swipe to chat
   /// bubble.
   final MessageCallBack assignReplyMessage;
+
+  ///
+  final List<PullDownMenuEntry>? onChatBubbleLongPress;
 
   @override
   State<ChatListWidget> createState() => _ChatListWidgetState();
@@ -198,24 +203,7 @@ class _ChatListWidgetState extends State<ChatListWidget>
                     messageConfig: widget.messageConfig,
                     chatBubbleConfig: widget.chatBubbleConfig,
                     typeIndicatorConfig: widget.typeIndicatorConfig,
-                    onChatBubbleLongPress: (yCoordinate, xCoordinate, message) {
-                      if (featureActiveConfig?.enableReactionPopup ?? false) {
-                        _reactionPopupKey.currentState?.refreshWidget(
-                          message: message,
-                          xCoordinate: xCoordinate,
-                          yCoordinate: yCoordinate < 0
-                              ? -(yCoordinate) - 5
-                              : yCoordinate,
-                        );
-                        showPopUp.value = true;
-                      }
-                      if (featureActiveConfig?.enableReplySnackBar ?? false) {
-                        _showReplyPopup(
-                          message: message,
-                          sendByCurrentUser: message.sendBy == currentUser?.id,
-                        );
-                      }
-                    },
+                    onChatBubbleLongPress: widget.onChatBubbleLongPress,
                     onChatListTap: _onChatListTap,
                   ),
                   if (featureActiveConfig?.enableReactionPopup ?? false)

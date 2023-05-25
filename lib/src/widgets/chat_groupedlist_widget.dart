@@ -23,8 +23,10 @@ import 'package:chatview/chatview.dart';
 import 'package:chatview/src/extensions/extensions.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
 import 'package:chatview/src/widgets/type_indicator_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 
 import 'chat_bubble_widget.dart';
 import 'chat_group_header.dart';
@@ -86,7 +88,7 @@ class ChatGroupedListWidget extends StatefulWidget {
   final VoidCallBack onChatListTap;
 
   /// Provides callback when user press chat bubble for certain time then usual.
-  final void Function(double, double, Message) onChatBubbleLongPress;
+  final List<PullDownMenuEntry>? onChatBubbleLongPress;
 
   /// Provide flag for turn on/off to see message crated time view when user
   /// swipe whole chat.
@@ -301,34 +303,32 @@ class _ChatGroupedListWidgetState extends State<ChatGroupedListWidget>
                   return ValueListenableBuilder<String?>(
                     valueListenable: _replyId,
                     builder: (context, state, child) {
-                      return ChatBubbleWidget(
-                        key: message.key,
-                        messageTimeTextStyle:
-                            chatBackgroundConfig.messageTimeTextStyle,
-                        messageTimeIconColor:
-                            chatBackgroundConfig.messageTimeIconColor,
-                        message: message,
-                        messageConfig: widget.messageConfig,
-                        chatBubbleConfig: chatBubbleConfig,
-                        profileCircleConfig: profileCircleConfig,
-                        swipeToReplyConfig: widget.swipeToReplyConfig,
-                        repliedMessageConfig: widget.repliedMessageConfig,
-                        slideAnimation: _slideAnimation,
-                        onLongPress: (yCoordinate, xCoordinate) =>
-                            widget.onChatBubbleLongPress(
-                          yCoordinate,
-                          xCoordinate,
-                          message,
+                      return PullDownButton(
+                        itemBuilder: (context) => widget.onChatBubbleLongPress ?? [],
+                        buttonBuilder: (context, showMenu) => ChatBubbleWidget(
+                          key: message.key,
+                          messageTimeTextStyle:
+                              chatBackgroundConfig.messageTimeTextStyle,
+                          messageTimeIconColor:
+                              chatBackgroundConfig.messageTimeIconColor,
+                          message: message,
+                          messageConfig: widget.messageConfig,
+                          chatBubbleConfig: chatBubbleConfig,
+                          profileCircleConfig: profileCircleConfig,
+                          swipeToReplyConfig: widget.swipeToReplyConfig,
+                          repliedMessageConfig: widget.repliedMessageConfig,
+                          slideAnimation: _slideAnimation,
+                          onLongPress: (y, x) => showMenu.call(),
+                          onSwipe: widget.assignReplyMessage,
+                          shouldHighlight: state == message.id,
+                          onReplyTap: widget
+                                      .repliedMessageConfig
+                                      ?.repliedMsgAutoScrollConfig
+                                      .enableScrollToRepliedMsg ??
+                                  false
+                              ? (replyId) => _onReplyTap(replyId, snapshot.data)
+                              : null,
                         ),
-                        onSwipe: widget.assignReplyMessage,
-                        shouldHighlight: state == message.id,
-                        onReplyTap: widget
-                                    .repliedMessageConfig
-                                    ?.repliedMsgAutoScrollConfig
-                                    .enableScrollToRepliedMsg ??
-                                false
-                            ? (replyId) => _onReplyTap(replyId, snapshot.data)
-                            : null,
                       );
                     },
                   );

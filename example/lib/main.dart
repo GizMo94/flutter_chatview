@@ -1,8 +1,10 @@
 import 'package:chatview/chatview.dart';
 import 'package:example/data.dart';
 import 'package:example/models/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 
 void main() {
   runApp(const Example());
@@ -272,6 +274,23 @@ class _ChatScreenState extends State<ChatScreen> {
         swipeToReplyConfig: SwipeToReplyConfiguration(
           replyIconColor: theme.swipeToReplyIconColor,
         ),
+        onChatBubbleLongPress: [PullDownMenuItem(
+          onTap: () {},
+          title: 'Pin',
+          icon: CupertinoIcons.pin,
+        ),
+          PullDownMenuItem(
+            title: 'Forward',
+            subtitle: 'Share in different channel',
+            onTap: () {},
+            icon: CupertinoIcons.arrowshape_turn_up_right,
+          ),
+          PullDownMenuItem(
+            onTap: () {},
+            title: 'Delete',
+            isDestructive: true,
+            icon: CupertinoIcons.delete,
+          ),],
       ),
     );
   }
