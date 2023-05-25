@@ -274,7 +274,7 @@ class _ChatScreenState extends State<ChatScreen> {
         swipeToReplyConfig: SwipeToReplyConfiguration(
           replyIconColor: theme.swipeToReplyIconColor,
         ),
-        onChatBubbleLongPress: [PullDownMenuItem(
+        onChatBubbleLongPress: (message) => [PullDownMenuItem(
           onTap: () {},
           title: 'Pin',
           icon: CupertinoIcons.pin,
