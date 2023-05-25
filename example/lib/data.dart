@@ -88,7 +88,7 @@ class Data {
     ),
     Message(
       id: '10',
-      message: "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+      message: "https://storage.googleapis.com/download/storage/v1/b/locallyteams.appspot.com/o/demo%2Ffr26898907282%2Fchatmessage%2F85a2ff5b-6550-49ec-96eb-669a6f2dfcfd%2F022a76e2-7ded-4690-b853-d26c860a260a331965509413082349.mp4?generation=1684944526250208&alt=media",
       status: MessageStatus.read,
       createdAt: DateTime.now(),
       sendBy: '1',

@@ -138,7 +138,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
                             : 0,
                       ),
                   height: widget.videoMessageConfig?.height ?? 250,
-                  width: widget.videoMessageConfig?.width ?? 200,
+                  width: widget.videoMessageConfig?.width ?? 225,
                   child: ClipRRect(
                     borderRadius: widget.videoMessageConfig?.borderRadius ??
                         BorderRadius.circular(14),
