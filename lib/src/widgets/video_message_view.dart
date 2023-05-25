@@ -95,6 +95,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       showOptions: false,
+      allowPlaybackSpeedChanging: false,
     );
   }
 
@@ -137,8 +138,8 @@ class _VideoMessageViewState extends State<VideoMessageView> {
                             ? 15
                             : 0,
                       ),
-                  height: widget.videoMessageConfig?.height ?? 250,
-                  width: widget.videoMessageConfig?.width ?? 225,
+                  height: widget.videoMessageConfig?.height ?? 230,
+                  width: widget.videoMessageConfig?.width ?? 230,
                   child: ClipRRect(
                     borderRadius: widget.videoMessageConfig?.borderRadius ??
                         BorderRadius.circular(14),
