@@ -245,13 +245,6 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          imageMessageConfig: ImageMessageConfiguration(
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-            shareIconConfig: ShareIconConfiguration(
-              defaultIconBackgroundColor: theme.shareIconBackgroundColor,
-              defaultIconColor: theme.shareIconColor,
-            ),
-          ),
         ),
         profileCircleConfig: const ProfileCircleConfiguration(
           profileImageUrl: Data.profileImage,

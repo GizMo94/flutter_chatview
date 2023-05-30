@@ -131,7 +131,7 @@ class _VideoMessageViewState extends State<VideoMessageView> {
                       widget.videoMessageConfig?.padding ?? EdgeInsets.zero,
                   margin: widget.videoMessageConfig?.margin ??
                       EdgeInsets.only(
-                        top: 6,
+                        top: 0,
                         right: widget.isMessageBySender ? 6 : 0,
                         left: widget.isMessageBySender ? 0 : 6,
                         bottom: widget.message.reaction.reactions.isNotEmpty

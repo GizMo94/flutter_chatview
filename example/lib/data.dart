@@ -99,7 +99,7 @@ class Data {
       message: "https://miro.medium.com/max/1000/0*s7of7kWnf9fDg4XM.jpeg",
       createdAt: DateTime.now(),
       messageType: MessageType.image,
-      sendBy: '1',
+      sendBy: '2',
       reaction: Reaction(reactions: ['\u{2764}'], reactedUserIds: ['2']),
       status: MessageStatus.read,
     ),
@@ -112,6 +112,24 @@ class Data {
       sendBy: '1',
       messageType: MessageType.file,
       status: MessageStatus.archive,
+    ),
+    Message(
+      id: '12',
+      message: "demo_fr26898907282_message_6d4ef538-16d7-46ef-8d45-966c49dc4578_pv1681468698_SIGNED.pdf",
+      name: "demo_fr26898907282_message_6d4ef538-16d7-46ef-8d45-966c49dc4578_pv1681468698_SIGNED.pdf",
+      size: 58051,
+      createdAt: DateTime.now(),
+      sendBy: '1',
+      messageType: MessageType.file,
+    ),
+    Message(
+      id: '12',
+      message: "demo_fr26898907282_message_6d4ef538-16d7-46ef-8d45-966c49dc4578_pv1681468698_SIGNED.pdf",
+      name: "demo_fr26898907282_message_6d4ef538-16d7-46ef-8d45-966c49dc4578_pv1681468698_SIGNED.pdf",
+      size: 58051,
+      createdAt: DateTime.now(),
+      sendBy: '2',
+      messageType: MessageType.file,
     ),
   ];
 }

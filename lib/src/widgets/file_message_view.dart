@@ -75,6 +75,14 @@ class FileMessageView extends StatelessWidget {
         message: message,
       );
 
+  Color get color => isMessageBySender
+      ? fileMessageConfiguration?.incomingColor ?? Colors.purple
+      : Colors.white;
+
+  Color get colorInverse => !isMessageBySender
+      ? fileMessageConfiguration?.incomingColor ?? Colors.purple
+      : Colors.white;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -103,28 +111,60 @@ class FileMessageView extends StatelessWidget {
                           fileMessageConfiguration?.padding ?? EdgeInsets.zero,
                       margin: fileMessageConfiguration?.margin ??
                           EdgeInsets.only(
-                            top: 6,
+                            top: 0,
                             right: isMessageBySender ? 6 : 0,
                             left: isMessageBySender ? 0 : 6,
                             bottom:
                                 message.reaction.reactions.isNotEmpty ? 15 : 0,
                           ),
                       decoration: BoxDecoration(
-                        color: isMessageBySender
-                            ? fileMessageConfiguration?.color ?? Colors.purple
-                            : Colors.grey.shade500,
+                        color: color.withOpacity(.65),
                         borderRadius: fileMessageConfiguration?.borderRadius ??
                             BorderRadius.circular(replyBorderRadius2),
                       ),
-                      height: fileMessageConfiguration?.height ?? 75,
-                      width: fileMessageConfiguration?.width ?? 75,
+                      height: fileMessageConfiguration?.height ?? 65,
+                      width: fileMessageConfiguration?.width ?? 205,
                       child: ClipRRect(
                         borderRadius: fileMessageConfiguration?.borderRadius ??
                             BorderRadius.circular(14),
-                        child: const Icon(
-                          Icons.file_copy_outlined,
-                          color: Colors.white,
-                          size: 32,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 45,
+                                width: 45,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 6),
+                                decoration: BoxDecoration(
+                                  color: color,
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: colorInverse,
+                                    width: .5
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.file_copy_outlined,
+                                  color: colorInverse,
+                                  size: 20,
+                                ),
+                              ),
+                              if (message.name != null) ...[
+                                buildFileNameWidget(
+                                    message.name!, colorInverse),
+                                buildFileExtensionWidget(
+                                    message.name!, colorInverse),
+                                Text(
+                                  ' - ${formatSize(message.size!)}',
+                                  style: TextStyle(
+                                    color: colorInverse,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ]
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -141,32 +181,48 @@ class FileMessageView extends StatelessWidget {
             //if (!isMessageBySender) iconButton,
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 6.0, top: 2),
-          child: Text(
-              '${message.name} - ${message.size != null ? formatSize(message.size!) : ''}',
-              style: const TextStyle(color: Colors.grey, fontSize: 12)),
-        ),
       ],
     );
   }
+}
 
-  String formatSize(double size) {
-    const int kiloByte = 1024;
-    const int megaByte = kiloByte * 1024;
-    const int gigaByte = megaByte * 1024;
+Widget buildFileNameWidget(String file, Color color) {
+  String fileName = file.split('.').first;
 
-    if (size >= gigaByte) {
-      final double sizeInGB = size / gigaByte;
-      return '${sizeInGB.toStringAsFixed(2)} Go';
-    } else if (size >= megaByte) {
-      final double sizeInMB = size / megaByte;
-      return '${sizeInMB.toStringAsFixed(2)} Mo';
-    } else if (size >= kiloByte) {
-      final double sizeInKB = size / kiloByte;
-      return '${sizeInKB.toStringAsFixed(2)} ko';
-    } else {
-      return '${size.toStringAsFixed(2)} o';
-    }
+  return Flexible(
+    child: Text(
+      fileName,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(color: color, fontSize: 12),
+    ),
+  );
+}
+
+Widget buildFileExtensionWidget(String file, Color color) {
+  String extension = file.split('.').last;
+
+  return Text(
+    '.$extension',
+    style: TextStyle(color: color, fontSize: 12),
+  );
+}
+
+String formatSize(double size) {
+  const int kiloByte = 1024;
+  const int megaByte = kiloByte * 1024;
+  const int gigaByte = megaByte * 1024;
+
+  if (size >= gigaByte) {
+    final double sizeInGB = size / gigaByte;
+    return '${sizeInGB.toStringAsFixed(2)} Go';
+  } else if (size >= megaByte) {
+    final double sizeInMB = size / megaByte;
+    return '${sizeInMB.toStringAsFixed(2)} Mo';
+  } else if (size >= kiloByte) {
+    final double sizeInKB = size / kiloByte;
+    return '${sizeInKB.toStringAsFixed(2)} ko';
+  } else {
+    return '${size.toStringAsFixed(2)} o';
   }
 }

@@ -94,10 +94,10 @@ class ImageMessageView extends StatelessWidget {
                     ? Alignment.centerRight
                     : Alignment.centerLeft,
                 child: Container(
-                  padding: imageMessageConfig?.padding ?? EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
                   margin: imageMessageConfig?.margin ??
                       EdgeInsets.only(
-                        top: 6,
+                        top: 0,
                         right: isMessageBySender ? 6 : 0,
                         left: isMessageBySender ? 0 : 6,
                         bottom: message.reaction.reactions.isNotEmpty ? 15 : 0,

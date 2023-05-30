@@ -46,8 +46,11 @@ class FileMessageConfiguration {
   /// Used for giving border radius of image message.
   final BorderRadius? borderRadius;
 
-  /// Used for giving color of chat bubble.
-  final Color? color;
+  ///
+  final Color? incomingColor;
+
+  ///
+  final Color? outgoingColor;
 
   const FileMessageConfiguration({
     this.shareIconConfig,
@@ -57,6 +60,7 @@ class FileMessageConfiguration {
     this.padding,
     this.margin,
     this.borderRadius,
-    this.color,
+    this.incomingColor,
+    this.outgoingColor,
   });
 }
