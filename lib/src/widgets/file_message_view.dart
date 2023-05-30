@@ -145,9 +145,9 @@ class FileMessageView extends StatelessWidget {
                                   ),
                                 ),
                                 child: Icon(
-                                  Icons.file_copy_outlined,
+                                  Icons.description,
                                   color: colorInverse,
-                                  size: 20,
+                                  size: 22,
                                 ),
                               ),
                               if (message.name != null) ...[
