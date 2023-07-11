@@ -19,6 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+///
+enum Statut {
+  ///
+  ARCHIVED,
+
+  ///
+  DELETED,
+
+  ///
+  BLOCKED,
+}
+
 class ChatUser {
   /// Provides id of user.
   final String id;
@@ -32,11 +45,19 @@ class ChatUser {
   ///
   final String? email;
 
+  ///
+  final String? domain;
+
+  ///
+  final Statut? statut;
+
   ChatUser({
     required this.id,
     required this.name,
     this.profilePhoto,
     this.email,
+    this.domain,
+    this.statut,
   });
 
   factory ChatUser.fromJson(Map<String, dynamic> json) => ChatUser(
@@ -44,6 +65,8 @@ class ChatUser {
         name: json["name"],
         profilePhoto: json["profilePhoto"],
         email: json['email'],
+        domain: json['domain'],
+        statut: json['statut'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,5 +74,7 @@ class ChatUser {
         'name': name,
         'profilePhoto': profilePhoto,
         'email': email,
+        'domain': domain,
+        'statut': statut,
       };
 }
