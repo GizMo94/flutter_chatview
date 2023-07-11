@@ -20,6 +20,11 @@
  * SOFTWARE.
  */
 
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'chat_user.g.dart';
+
 ///
 enum Statut {
   ///
@@ -32,6 +37,8 @@ enum Statut {
   BLOCKED,
 }
 
+///
+@JsonSerializable()
 class ChatUser {
   /// Provides id of user.
   final String id;
@@ -60,21 +67,10 @@ class ChatUser {
     this.statut,
   });
 
-  factory ChatUser.fromJson(Map<String, dynamic> json) => ChatUser(
-        id: json["id"],
-        name: json["name"],
-        profilePhoto: json["profilePhoto"],
-        email: json['email'],
-        domain: json['domain'],
-        statut: json['statut'],
-      );
+  ///
+  factory ChatUser.fromJson(Map<String, dynamic> json) => _$ChatUserFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'profilePhoto': profilePhoto,
-        'email': email,
-        'domain': domain,
-        'statut': statut,
-      };
+  ///
+  @override
+  Map<String, dynamic> toJson() => _$ChatUserToJson(this);
 }
