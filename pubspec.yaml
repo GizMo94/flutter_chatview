@@ -20,21 +20,21 @@ dependencies:
     sdk: flutter
   grouped_list: ^5.1.2
   intl: ^0.18.0
-  flutter_linkify: ^5.0.2
-  url_launcher: ^6.1.7
-  emoji_picker_flutter: ^1.6.0
-  http: ^0.13.5
-  html: ^0.15.1
-  any_link_preview: ^3.0.0
+  flutter_linkify: ^6.0.0
+  url_launcher: ^6.1.12
+  emoji_picker_flutter: ^1.6.1
+  http: ^1.1.0
+  html: ^0.15.4
+  any_link_preview: ^3.0.1
   progress_indicators: ^1.0.0
-  image_picker: ^0.8.6
-  audio_waveforms: ^1.0.1
-  video_player: ^2.6.1
-  path_provider: ^2.0.14
+  image_picker: ^1.0.1
+  audio_waveforms: ^1.0.4
+  video_player: ^2.7.0
+  path_provider: ^2.0.15
   # For formatting time locale in message receipts
-  timeago: ^3.4.0
-  file_picker: ^5.3.0
-  chewie: ^1.6.0+1
+  timeago: ^3.5.0
+  file_picker: ^5.3.2
+  chewie: ^1.7.0
   pull_down_button: ^0.9.1
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
@@ -42,7 +42,7 @@ dev_dependencies:
   build_runner: ^2.4.6
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.2
 
 flutter:
 dependency_overrides:
