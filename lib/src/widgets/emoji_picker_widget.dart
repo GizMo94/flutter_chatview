@@ -20,11 +20,10 @@
  * SOFTWARE.
  */
 import 'dart:io';
-import 'package:flutter/foundation.dart' show kIsWeb;
-
-import 'package:flutter/material.dart';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 
 import '../values/typedefs.dart';
 
@@ -64,7 +63,6 @@ class EmojiPickerWidget extends StatelessWidget {
                 emojiSizeMax: 32 * ((!kIsWeb && Platform.isIOS) ? 1.30 : 1.0),
                 initCategory: Category.RECENT,
                 bgColor: Colors.white,
-                showRecentsTab: false,
                 recentsLimit: 28,
               ),
             ),
