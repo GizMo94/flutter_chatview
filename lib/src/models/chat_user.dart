@@ -20,7 +20,6 @@
  * SOFTWARE.
  */
 
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'chat_user.g.dart';
@@ -68,7 +67,8 @@ class ChatUser {
   });
 
   ///
-  factory ChatUser.fromJson(Map<String, dynamic> json) => _$ChatUserFromJson(json);
+  factory ChatUser.fromJson(Map<String, dynamic> json) =>
+      _$ChatUserFromJson(json);
 
   ///
   @override
