@@ -39,6 +39,8 @@ class Message {
   /// Provides id of sender of message.
   final String sendBy;
 
+  final String sendByEmail;
+
   /// Provides reply message if user triggers any reply on any message.
   final ReplyMessage replyMessage;
 
@@ -65,6 +67,7 @@ class Message {
     required this.message,
     required this.createdAt,
     required this.sendBy,
+    required this.sendByEmail,
     this.replyMessage = const ReplyMessage(),
     Reaction? reaction,
     this.messageType = MessageType.text,
@@ -130,6 +133,7 @@ class Message {
     String? message,
     DateTime? createdAt,
     String? sendBy,
+    String? sendByEmail,
     ReplyMessage? replyMessage,
     Reaction? reaction,
     MessageType? messageType,
@@ -142,6 +146,7 @@ class Message {
       message: message ?? this.message,
       createdAt: createdAt ?? this.createdAt,
       sendBy: sendBy ?? this.sendBy,
+      sendByEmail: sendByEmail ?? this.sendByEmail,
       replyMessage: replyMessage ?? this.replyMessage,
       reaction: reaction ?? this.reaction,
       messageType: messageType ?? this.messageType,
