@@ -20,7 +20,6 @@
  * SOFTWARE.
  */
 
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'chat_user.g.dart';
@@ -50,7 +49,7 @@ class ChatUser {
   final String? profilePhoto;
 
   ///
-  final String? email;
+  final String email;
 
   ///
   final String? domain;
@@ -61,14 +60,15 @@ class ChatUser {
   ChatUser({
     required this.id,
     required this.name,
+    required this.email,
     this.profilePhoto,
-    this.email,
     this.domain,
     this.statut,
   });
 
   ///
-  factory ChatUser.fromJson(Map<String, dynamic> json) => _$ChatUserFromJson(json);
+  factory ChatUser.fromJson(Map<String, dynamic> json) =>
+      _$ChatUserFromJson(json);
 
   ///
   @override

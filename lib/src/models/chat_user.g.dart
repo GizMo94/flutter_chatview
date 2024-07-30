@@ -9,8 +9,8 @@ part of 'chat_user.dart';
 ChatUser _$ChatUserFromJson(Map<String, dynamic> json) => ChatUser(
       id: json['id'] as String,
       name: json['name'] as String,
+      email: json['email'] as String,
       profilePhoto: json['profilePhoto'] as String?,
-      email: json['email'] as String?,
       domain: json['domain'] as String?,
       statut: $enumDecodeNullable(_$StatutEnumMap, json['statut']),
     );
