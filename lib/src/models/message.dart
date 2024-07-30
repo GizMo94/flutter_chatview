@@ -124,4 +124,31 @@ class Message {
         'size': size,
         'name': name
       };
+
+  Message copyWith({
+    String? id,
+    String? message,
+    DateTime? createdAt,
+    String? sendBy,
+    ReplyMessage? replyMessage,
+    Reaction? reaction,
+    MessageType? messageType,
+    Duration? voiceMessageDuration,
+    String? name,
+    double? size,
+  }) {
+    return Message(
+      id: id ?? this.id,
+      message: message ?? this.message,
+      createdAt: createdAt ?? this.createdAt,
+      sendBy: sendBy ?? this.sendBy,
+      replyMessage: replyMessage ?? this.replyMessage,
+      reaction: reaction ?? this.reaction,
+      messageType: messageType ?? this.messageType,
+      status: _status.value,
+      voiceMessageDuration: voiceMessageDuration ?? this.voiceMessageDuration,
+      name: name ?? this.name,
+      size: size ?? this.size,
+    );
+  }
 }
