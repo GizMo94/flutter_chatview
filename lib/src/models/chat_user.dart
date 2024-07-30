@@ -49,7 +49,7 @@ class ChatUser {
   final String? profilePhoto;
 
   ///
-  final String email;
+  final String? email;
 
   ///
   final String? domain;
@@ -60,7 +60,7 @@ class ChatUser {
   ChatUser({
     required this.id,
     required this.name,
-    required this.email,
+    this.email,
     this.profilePhoto,
     this.domain,
     this.statut,
