@@ -107,6 +107,7 @@ class ChatController {
       message: message.message,
       createdAt: message.createdAt,
       sendBy: message.sendBy,
+      sendByEmail: message.sendByEmail,
       replyMessage: message.replyMessage,
       reaction: message.reaction,
       messageType: message.messageType,
